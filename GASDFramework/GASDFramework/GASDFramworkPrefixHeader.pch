@@ -1,0 +1,26 @@
+//
+//  GASDFramworkPrefixHeader.pch
+//  GASDFramework
+//
+//  Created by roselifeye on 15/10/17.
+//  Copyright © 2015年 roselifeye. All rights reserved.
+//
+
+#ifndef GASDFramworkPrefixHeader_pch
+#define GASDFramworkPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* GASDFramworkPrefixHeader_pch */
+
+
+#ifdef __OBJC__
+
+#import "Coordinate.h"
+#import "BaseStation.h"
+#import "SubStation.h"
+
+#import "RSSIWeighted.h"
+
+#endif
