@@ -11,5 +11,14 @@
 @implementation BaseStation
 
 
+@end
+
+
+@implementation BSCorrespoing
+
+- (SubStation *)correspondingSS {
+    
+    return _correspondingSS;
+}
 
 @end

@@ -9,8 +9,8 @@
 #ifndef GlobalDefine_h
 #define GlobalDefine_h
 
-#define NumberOfSS          100;
-#define NumberOfOriginalBS  50;
-#define NumberOfAlpha       0.6;
+#define NumberOfSS          100
+#define NumberOfOriginalBS  50
+#define NumberOfAlpha       0.6
 
 #endif /* GlobalDefine_h */

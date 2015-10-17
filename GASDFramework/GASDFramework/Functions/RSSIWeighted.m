@@ -12,13 +12,39 @@
 
 + (RSSI_WEIGHTED_LEVEL)weightCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD {
     RSSI_WEIGHTED_LEVEL weight = RSSI_WEIGHTED_NONE;
+    int rssiValue = [RSSIWeighted rssiValueCalculateWithBSCD:bsCD andSSCD:ssCD];
     
-    
+    if (-80 > rssiValue) {
+        weight = RSSI_WEIGHTED_NONE;
+    } else if ((-80 <= rssiValue) && (-55 > rssiValue)) {
+        weight = RSSI_WEIGHTED_LOW;
+    } else if ((-55 <= rssiValue) && (-30 > rssiValue)) {
+        weight = RSSI_WEIGHTED_MID;
+    } else if (-30 > rssiValue) {
+        weight = RSSI_WEIGHTED_HIGH;
+    } else weight = RSSI_WEIGHTED_NONE;
     return weight;
 }
 
-- (int)rssiValueCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD {
++ (int)rssiValueCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD {
     int rssiValue = 0;
+    
+    /**
+     *  Caculate the distance from the beacon to destination.
+     */
+    float distance = sqrtf(pow((ssCD.x-bsCD.x), 2) + pow((ssCD.y-bsCD.y), 2));
+    
+    /**
+     *  The Original RSSI is -5.
+     *  The Fadding is based on the distance.
+     *  Every Unit will reduce 35.
+     *  So that a single beacon can only influence 2 near coordinates.
+     *
+     */
+    rssiValue = -5 - (distance/NumberOfSS)*35;
+    if (rssiValue < -100) {
+        rssiValue = 0;
+    }
     
     return rssiValue;
 }
