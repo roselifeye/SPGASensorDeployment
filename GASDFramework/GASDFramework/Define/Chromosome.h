@@ -15,17 +15,21 @@
 
 @property (nonatomic, retain) NSArray *cpoints;
 
-@property (nonatomic, assign) int numberOfActivated;
+@property (nonatomic, assign, readonly) int numberOfActivated;
+
+- (instancetype)initWithPosition:(NSArray *)cpoints;
 
 @end
 
 
 @interface Cpoint : NSObject
 
-@property (nonatomic, retain) BaseStation *bs;
+@property (nonatomic, retain, readonly) BaseStation *bs;
 /**
  *  This is the activated status of the base station.
  */
 @property (nonatomic, assign) BOOL status;
+
+- (instancetype)initWithBS:(BaseStation *)baseStation;
 
 @end

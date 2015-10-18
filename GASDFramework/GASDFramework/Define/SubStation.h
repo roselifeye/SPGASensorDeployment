@@ -10,7 +10,9 @@
 
 @interface SubStation : NSObject
 
-@property (nonatomic, assign) SPPosition ssCD;
-@property (nonatomic, assign) int num;
+@property (nonatomic, assign, readonly) SPPosition ssCD;
+@property (nonatomic, assign, readonly) int num;
+
+- (instancetype)initWithPosition:(SPPosition)position andNumber:(int)number;
 
 @end

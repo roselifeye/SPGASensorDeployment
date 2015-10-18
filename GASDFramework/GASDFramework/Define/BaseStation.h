@@ -12,7 +12,7 @@
 
 @interface BaseStation : NSObject
 
-@property (nonatomic, assign) SPPosition bsCD;
+@property (nonatomic, assign,  readonly) SPPosition bsCD;
 
 /**
  *  The element of the array is class BSCorrespoing;
@@ -21,12 +21,16 @@
 
 - (instancetype)initWithPosition:(SPPosition)position;
 
+- (void)addSubStaions:(SubStation *)substation;
+
 @end
 
 
-@interface BSCorrespoing : NSObject
+@interface BSCorresponding : NSObject
 
-@property (nonatomic, retain) SubStation *correspondingSS;
-@property (nonatomic, assign) int RSSIweight;
+@property (nonatomic, retain, readonly) SubStation *correspondingSS;
+@property (nonatomic, assign, readonly) int RSSIweight;
+
+- (instancetype)initWithSS:(SubStation *)subStation andWeight:(int)weight;
 
 @end

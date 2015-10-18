@@ -10,7 +10,7 @@
 
 @implementation RSSIWeighted
 
-+ (RSSI_WEIGHTED_LEVEL)weightCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD {
++ (RSSI_WEIGHTED_LEVEL)weightCalculateWithBSCD:(SPPosition)bsCD andSSCD:(SPPosition)ssCD {
     RSSI_WEIGHTED_LEVEL weight = RSSI_WEIGHTED_NONE;
     int rssiValue = [RSSIWeighted rssiValueCalculateWithBSCD:bsCD andSSCD:ssCD];
     
@@ -26,7 +26,7 @@
     return weight;
 }
 
-+ (int)rssiValueCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD {
++ (int)rssiValueCalculateWithBSCD:(SPPosition)bsCD andSSCD:(SPPosition)ssCD {
     int rssiValue = 0;
     
     /**

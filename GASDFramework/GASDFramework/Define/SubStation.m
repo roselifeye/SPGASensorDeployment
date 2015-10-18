@@ -10,4 +10,12 @@
 
 @implementation SubStation
 
+- (instancetype)initWithPosition:(SPPosition)position andNumber:(int)number {
+    if(self) {
+        _ssCD = position;
+        _num = number;
+    }
+    return self;
+}
+
 @end

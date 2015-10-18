@@ -18,14 +18,22 @@
     return self;
 }
 
+- (void)addSubStaions:(SubStation *)substation {
+    BSCorresponding *correspondingSS = [[BSCorresponding alloc] initWithSS:substation andWeight:[RSSIWeighted weightCalculateWithBSCD:_bsCD andSSCD:substation.ssCD]];
+    [_subSSs addObject:correspondingSS];
+}
+
 @end
 
 
-@implementation BSCorrespoing
+@implementation BSCorresponding
 
-- (SubStation *)correspondingSS {
-    
-    return _correspondingSS;
+- (instancetype)initWithSS:(SubStation *)subStation andWeight:(int)weight {
+    if(self) {
+        _correspondingSS = subStation;
+        _RSSIweight = weight;
+    }
+    return self;
 }
 
 @end

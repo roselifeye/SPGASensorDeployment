@@ -26,6 +26,6 @@ typedef NS_ENUM(NSInteger, RSSI_WEIGHTED_LEVEL){
  *
  *  @return weight.
  */
-+ (RSSI_WEIGHTED_LEVEL)weightCalculateWithBSCD:(Coordinate *)bsCD andSSCD:(Coordinate *)ssCD;
++ (RSSI_WEIGHTED_LEVEL)weightCalculateWithBSCD:(SPPosition)bsCD andSSCD:(SPPosition)ssCD;
 
 @end
