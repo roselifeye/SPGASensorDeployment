@@ -10,7 +10,7 @@
 
 @interface SubStation : NSObject
 
-@property (nonatomic, retain) Coordinate *ssCD;
+@property (nonatomic, assign) SPPosition ssCD;
 @property (nonatomic, assign) int num;
 
 @end

@@ -61,6 +61,7 @@
 		C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlistManager.m; path = Data/SPPlistManager.m; sourceTree = "<group>"; };
 		C3CDEC6E1BD40BAD00708DDE /* SPBeaconLocationList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = SPBeaconLocationList.plist; path = /Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SPBeaconLocationList.plist; sourceTree = "<absolute>"; };
 		C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SPBeaconLocationList.plist; sourceTree = "<group>"; };
+		C3D8D7081BD41F53003F8E52 /* SPCoordinate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPCoordinate.h; path = Define/SPCoordinate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +158,7 @@
 			children = (
 				C32BB0B41BD2AA2B00E069CF /* BaseStation.h */,
 				C32BB0B51BD2AA2B00E069CF /* BaseStation.m */,
+				C3D8D7081BD41F53003F8E52 /* SPCoordinate.h */,
 				C32BB0B71BD2AA4200E069CF /* Coordinate.h */,
 				C32BB0B81BD2AA4200E069CF /* Coordinate.m */,
 				C32BB0BA1BD2AA5800E069CF /* SubStation.h */,

@@ -9,15 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "SubStation.h"
 
+
 @interface BaseStation : NSObject
 
-@property (nonatomic, retain) Coordinate *bsCD;
+@property (nonatomic, assign) SPPosition bsCD;
 
 /**
  *  The element of the array is class BSCorrespoing;
  */
-@property (nonatomic, retain) NSArray *subSSs;
+@property (nonatomic, retain) NSMutableArray *subSSs;
 
+- (instancetype)initWithPosition:(SPPosition)position;
 
 @end
 

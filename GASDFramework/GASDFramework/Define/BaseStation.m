@@ -10,6 +10,13 @@
 
 @implementation BaseStation
 
+- (instancetype)initWithPosition:(SPPosition)position {
+    if(self) {
+        _bsCD = position;
+        _subSSs = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
 
 @end
 

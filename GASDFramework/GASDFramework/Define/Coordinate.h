@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface Coordinate : NSObject
 
 @property (nonatomic, assign) int x;

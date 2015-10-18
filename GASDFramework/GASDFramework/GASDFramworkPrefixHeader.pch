@@ -19,6 +19,7 @@
 
 #import "GlobalDefine.h"
 #import "Coordinate.h"
+#import "SPCoordinate.h"
 #import "BaseStation.h"
 #import "SubStation.h"
 

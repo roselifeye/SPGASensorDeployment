@@ -12,6 +12,8 @@
 
 void initialBS() {
     NSMutableArray *beaconData = [SPPlistManager GetBeaconData];
+    
+    
 }
 
 int main(int argc, const char * argv[]) {
