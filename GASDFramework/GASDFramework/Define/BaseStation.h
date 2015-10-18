@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SubStation.h"
+#import "RSSIWeighted.h"
 
 
 @interface BaseStation : NSObject
@@ -29,8 +30,8 @@
 @interface BSCorresponding : NSObject
 
 @property (nonatomic, retain, readonly) SubStation *correspondingSS;
-@property (nonatomic, assign, readonly) int RSSIweight;
+@property (nonatomic, assign, readonly) RSSI_WEIGHTED_LEVEL RSSIweight;
 
-- (instancetype)initWithSS:(SubStation *)subStation andWeight:(int)weight;
+- (instancetype)initWithSS:(SubStation *)subStation andWeight:(RSSI_WEIGHTED_LEVEL)weight;
 
 @end
