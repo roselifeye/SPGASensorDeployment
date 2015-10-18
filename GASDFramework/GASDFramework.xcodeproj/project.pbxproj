@@ -17,12 +17,15 @@
 		C32BB0CF1BD2AB1B00E069CF /* Repair.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0CE1BD2AB1B00E069CF /* Repair.m */; settings = {ASSET_TAGS = (); }; };
 		C32BB0D31BD2AB2E00E069CF /* Mutation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0D21BD2AB2E00E069CF /* Mutation.m */; settings = {ASSET_TAGS = (); }; };
 		C34535F51BD1A39700F4BBFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C34535F41BD1A39700F4BBFE /* main.m */; };
+		C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */; settings = {ASSET_TAGS = (); }; };
+		C3CDEC701BD40BE800708DDE /* SPBeaconLocationList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CDEC6E1BD40BAD00708DDE /* SPBeaconLocationList.plist */; };
+		C3CDECA71BD4120100708DDE /* SPBeaconLocationList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C34535EF1BD1A39700F4BBFE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
@@ -54,6 +57,10 @@
 		C32BB0D51BD2ABBB00E069CF /* GASDFramworkPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GASDFramworkPrefixHeader.pch; sourceTree = "<group>"; };
 		C34535F11BD1A39700F4BBFE /* GASDFramework */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GASDFramework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C34535F41BD1A39700F4BBFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C3CDEC6A1BD40A2100708DDE /* SPPlistManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlistManager.h; path = Data/SPPlistManager.h; sourceTree = "<group>"; };
+		C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlistManager.m; path = Data/SPPlistManager.m; sourceTree = "<group>"; };
+		C3CDEC6E1BD40BAD00708DDE /* SPBeaconLocationList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = SPBeaconLocationList.plist; path = /Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SPBeaconLocationList.plist; sourceTree = "<absolute>"; };
+		C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SPBeaconLocationList.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +142,7 @@
 		C34535F31BD1A39700F4BBFE /* GASDFramework */ = {
 			isa = PBXGroup;
 			children = (
+				C3CDEC681BD409EB00708DDE /* Data */,
 				C32BB0D41BD2AB4900E069CF /* GlobalDefine.h */,
 				C32BB0D51BD2ABBB00E069CF /* GASDFramworkPrefixHeader.pch */,
 				C32BB0C01BD2AA9900E069CF /* Functions */,
@@ -159,6 +167,16 @@
 			name = Define;
 			sourceTree = "<group>";
 		};
+		C3CDEC681BD409EB00708DDE /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */,
+				C3CDEC6A1BD40A2100708DDE /* SPPlistManager.h */,
+				C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,6 +187,7 @@
 				C34535ED1BD1A39700F4BBFE /* Sources */,
 				C34535EE1BD1A39700F4BBFE /* Frameworks */,
 				C34535EF1BD1A39700F4BBFE /* CopyFiles */,
+				C3CDEC6F1BD40BE300708DDE /* Resources */,
 			);
 			buildRules = (
 			);
@@ -199,6 +218,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C34535E81BD1A39700F4BBFE;
 			productRefGroup = C34535F21BD1A39700F4BBFE /* Products */;
@@ -210,6 +230,18 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		C3CDEC6F1BD40BE300708DDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3CDECA71BD4120100708DDE /* SPBeaconLocationList.plist in Resources */,
+				C3CDEC701BD40BE800708DDE /* SPBeaconLocationList.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C34535ED1BD1A39700F4BBFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -219,6 +251,7 @@
 				C32BB0B91BD2AA4200E069CF /* Coordinate.m in Sources */,
 				C32BB0D31BD2AB2E00E069CF /* Mutation.m in Sources */,
 				C32BB0BF1BD2AA8800E069CF /* Chromosome.m in Sources */,
+				C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */,
 				C32BB0C71BD2AADB00E069CF /* UtilityFunc.m in Sources */,
 				C32BB0CB1BD2AAF600E069CF /* Crossover.m in Sources */,
 				C32BB0CF1BD2AB1B00E069CF /* Repair.m in Sources */,
