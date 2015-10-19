@@ -19,6 +19,10 @@
 #define NumberOfBSPool      50
 
 #define OriginalAlpha       0.6
+/**
+ *  Add Minimum Fitness for filter the valid Chromosome
+ */
+#define MinimumFitness         40
 
 
 /**

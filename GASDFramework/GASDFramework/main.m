@@ -41,7 +41,7 @@ NSMutableArray* initialBS() {
 NSMutableArray* createCPoint(NSMutableArray *BSs, NSMutableArray *statusArray) {
     NSMutableArray *cpoints = [[NSMutableArray alloc] init];
     for (int i = 0; i < BSs.count; i++) {
-        Cpoint *cpoint = [[Cpoint alloc] initWithBS:[BSs objectAtIndex:0]];
+        Cpoint *cpoint = [[Cpoint alloc] initWithBS:[BSs objectAtIndex:i]];
         [cpoints addObject:cpoint];
     }
     for (NSNumber *index in statusArray) {
@@ -61,14 +61,19 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
+        /*
         NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
-        NSMutableArray *cpoints = createCPoint(initialBS(), statusArray);
+        NSMutableArray *BSs = initialBS();
+        NSMutableArray *cpoints = [[NSMutableArray alloc] initWithArray:createCPoint(BSs, statusArray)];
         createChromosome(cpoints, NumberOfOActivatedBS);
+        */
         while (1) {
             NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
             NSMutableArray *cpoints = createCPoint(initialBS(), statusArray);
             Chromosome* chro = createChromosome(cpoints, NumberOfOActivatedBS);
-            if (chro.fitness >= 80) break;
+            if (chro.fitness >= MinimumFitness) {
+                NSLog(@"GOOD");
+                break;}
         }
     }
     return 0;
