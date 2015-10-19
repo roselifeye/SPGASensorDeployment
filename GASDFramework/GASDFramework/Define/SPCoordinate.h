@@ -16,13 +16,11 @@ struct SPPosition {
 typedef struct SPPosition SPPosition;
 
 static inline SPPosition
-SPPositionMake(int x, int y)
-{
+SPPositionMake(int x, int y) {
     SPPosition position;
     position.x = x;
     position.y = y;
     return position;
 }
-
 
 #endif /* SPCoordinate_h */

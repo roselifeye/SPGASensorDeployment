@@ -18,7 +18,7 @@
  */
 #define NumberOfBSPool      50
 
-#define NumberOfAlpha       0.6
+#define OriginalAlpha       0.6
 
 
 /**

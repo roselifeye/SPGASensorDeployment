@@ -17,7 +17,6 @@ typedef NS_ENUM(NSInteger, RSSI_WEIGHTED_LEVEL){
     RSSI_WEIGHTED_HIGH,      // If the RSSI value is -30 <= , the weight is high.
 };
 
-
 /**
  *  Calculate the weight by coordiantes of base station and substation.
  *

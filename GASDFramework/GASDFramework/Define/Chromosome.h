@@ -17,6 +17,8 @@
 
 @property (nonatomic, assign) int numberOfActivated;
 
+@property (nonatomic, assign) float fitness;
+
 - (instancetype)initWithPosition:(NSArray *)cpoints andNumberOfActivated:(int)numberOfActivated;
 
 + (int)getRandomNumber;

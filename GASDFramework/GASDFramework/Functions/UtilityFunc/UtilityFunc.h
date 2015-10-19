@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chromosome.h"
 
 @interface UtilityFunc : NSObject
+
++ (float)fitnessFunctionWithChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio;
 
 @end

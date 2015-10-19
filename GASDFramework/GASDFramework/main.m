@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SPPlistManager.h"
 #import "Chromosome.h"
+#import "UtilityFunc.h"
 
 NSMutableArray* initSS() {
     NSMutableArray *SSs = [[NSMutableArray alloc] init];
@@ -44,13 +45,14 @@ NSMutableArray* createCPoint(NSMutableArray *BSs, NSMutableArray *statusArray) {
         [cpoints addObject:cpoint];
     }
     for (NSNumber *index in statusArray) {
-        ((Cpoint *)[cpoints objectAtIndex:[index intValue]]).status = YES;
+        ((Cpoint *)[cpoints objectAtIndex:[index intValue]-1]).status = YES;
     }
     return cpoints;
 }
 
 Chromosome* createChromosome(NSMutableArray *cpoints, int numberOfActivated) {
     Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints andNumberOfActivated:numberOfActivated];
+    chromosome.fitness = [UtilityFunc fitnessFunctionWithChromosome:chromosome andRecognitionRatio:OriginalAlpha];
     return chromosome;
 }
 
@@ -62,6 +64,12 @@ int main(int argc, const char * argv[]) {
         NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
         NSMutableArray *cpoints = createCPoint(initialBS(), statusArray);
         createChromosome(cpoints, NumberOfOActivatedBS);
+        while (1) {
+            NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
+            NSMutableArray *cpoints = createCPoint(initialBS(), statusArray);
+            Chromosome* chro = createChromosome(cpoints, NumberOfOActivatedBS);
+            if (chro.fitness >= 80) break;
+        }
     }
     return 0;
 }

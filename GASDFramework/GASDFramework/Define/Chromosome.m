@@ -7,6 +7,7 @@
 //
 
 #import "Chromosome.h"
+#import "UtilityFunc.h"
 
 @implementation Chromosome
 

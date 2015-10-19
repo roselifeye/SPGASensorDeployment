@@ -7,7 +7,6 @@
 //
 
 #import "UtilityFunc.h"
-#import "Chromosome.h"
 
 @implementation UtilityFunc
 
@@ -42,15 +41,17 @@
             //  If Point Status is Yes, which means this point is activated, and will dominat in chromosome, the system will add its weight.
             if (point.status) {
                 //  This aims to calculate the activated BS at the first time.
-                if (0 == i) numOfActivatedBS++;
+                if (0 == i) numOfActivatedBS += 1;
                 
+                //  Bug Here!!!
                 for (BSCorresponding *correspondingSS in point.bs.subSSs) {
-                    if (correspondingSS.correspondingSS.num == j) {
-                        totalWeight += (j * correspondingSS.RSSIweight);
+                    if (correspondingSS.correspondingSS.num == i) {
+                        totalWeight += ((i+1) * correspondingSS.RSSIweight);
                     }
                 }
             }
         }
+        //NSLog(@"TotalWeight:%d", totalWeight);
         [SSWeightSet addObject:[NSNumber numberWithInt:totalWeight]];
     }
     

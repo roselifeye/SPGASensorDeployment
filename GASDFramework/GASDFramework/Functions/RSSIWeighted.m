@@ -45,7 +45,6 @@
     if (rssiValue < -100) {
         rssiValue = 0;
     }
-    
     return rssiValue;
 }
 
