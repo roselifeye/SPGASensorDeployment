@@ -27,7 +27,7 @@ NSMutableArray* initialBS() {
     NSMutableArray *SSs = initSS();
     
     NSMutableArray *BSs = [[NSMutableArray alloc] init];
-    NSMutableArray *bsData = [SPPlistManager GetBeaconData];
+    NSMutableArray *bsData = [SPPlistManager GetBSData];
     for (NSDictionary *bs in bsData) {
         BaseStation *newBS = [[BaseStation alloc] initWithPosition:SPPositionMake([[bs objectForKey:@"x"] intValue], [[bs objectForKey:@"y"] intValue])];
         for (SubStation *ss in SSs) {

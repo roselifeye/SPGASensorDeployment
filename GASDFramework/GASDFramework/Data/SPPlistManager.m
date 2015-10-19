@@ -12,7 +12,7 @@
 
 
 //读取数据
-+ (NSMutableArray *)GetBeaconData {
++ (NSMutableArray *)GetBSData {
     NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SPBeaconLocationList.plist";
     //NSString *path =  [[NSBundle mainBundle] pathForResource:@"SPBeaconLocationList" ofType:@"plist"];
     NSMutableArray *beaconArray = [[[NSMutableArray alloc] initWithContentsOfFile:path] mutableCopy];

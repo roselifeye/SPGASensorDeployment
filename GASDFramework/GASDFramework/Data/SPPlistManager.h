@@ -10,6 +10,6 @@
 
 @interface SPPlistManager : NSObject
 
-+ (NSMutableArray *)GetBeaconData;
++ (NSMutableArray *)GetBSData;
 
 @end
