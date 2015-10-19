@@ -15,9 +15,12 @@
 
 @property (nonatomic, retain) NSArray *cpoints;
 
-@property (nonatomic, assign, readonly) int numberOfActivated;
+@property (nonatomic, assign) int numberOfActivated;
 
-- (instancetype)initWithPosition:(NSArray *)cpoints;
+- (instancetype)initWithPosition:(NSArray *)cpoints andNumberOfActivated:(int)numberOfActivated;
+
++ (int)getRandomNumber;
++ (NSMutableArray *)getSeriesRanNumWith:(int)number;
 
 @end
 

@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chromosome.h"
 
 @interface Mutation : NSObject
+
++ (void)mutateParentsWithOffspring:(Chromosome *)offspring;
 
 @end

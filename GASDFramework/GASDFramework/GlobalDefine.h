@@ -9,8 +9,15 @@
 #ifndef GlobalDefine_h
 #define GlobalDefine_h
 
-#define NumberOfSS          100
-#define NumberOfOriginalBS  50
+/**
+ *  Number of Original Activated BS
+ */
+#define NumberOfOActivatedBS  10
+/**
+ *  Number of Beacons
+ */
+#define NumberOfBSPool      50
+
 #define NumberOfAlpha       0.6
 
 
@@ -24,13 +31,8 @@
 #define MapRows 20
 #define MapColumns 10
 /**
- *  Number of Beacons
- */
-#define BeaconCount 10
-#define BeaconPreCount 50
-/**
  *  Number of Coordinate
  */
-#define CoordinateCount MapRows * MapColumns
+#define NumberOfSS MapRows * MapColumns
 
 #endif /* GlobalDefine_h */

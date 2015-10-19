@@ -20,7 +20,7 @@
         weight = RSSI_WEIGHTED_LOW;
     } else if ((-55 <= rssiValue) && (-30 > rssiValue)) {
         weight = RSSI_WEIGHTED_MID;
-    } else if (-30 > rssiValue) {
+    } else if ((-30 < rssiValue) && (-5 >= rssiValue)) {
         weight = RSSI_WEIGHTED_HIGH;
     } else weight = RSSI_WEIGHTED_NONE;
     return weight;
@@ -41,7 +41,7 @@
      *  So that a single beacon can only influence 2 near coordinates.
      *
      */
-    rssiValue = -5 - (distance/NumberOfSS)*35;
+    rssiValue = -5 - (distance/MapUnit)*35;
     if (rssiValue < -100) {
         rssiValue = 0;
     }

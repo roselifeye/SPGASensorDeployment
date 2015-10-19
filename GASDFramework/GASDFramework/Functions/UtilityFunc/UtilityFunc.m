@@ -34,7 +34,7 @@
      */
     NSMutableSet *SSWeightSet = [[NSMutableSet alloc] init];
     
-    for (int i = 0; i < CoordinateCount; i++) {
+    for (int i = 0; i < NumberOfSS; i++) {
         //  The totalWeight consists of RSSweight times the BS's number. Please check the following code.
         int totalWeight = 0;
         for (int j = 0; j < chromosome.cpoints.count; j++) {
@@ -55,7 +55,7 @@
     }
     
     //  Here, we minus number of no added elements to remove the duplicated elements.
-    numOfRecognition = (int)(SSWeightSet.count - (CoordinateCount - SSWeightSet.count));
+    numOfRecognition = (int)(SSWeightSet.count - (NumberOfSS - SSWeightSet.count));
     
     [numArray addObject:[NSNumber numberWithInt:numOfActivatedBS]];
     [numArray addObject:[NSNumber numberWithInt:numOfRecognition]];

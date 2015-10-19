@@ -12,10 +12,10 @@
 
 NSMutableArray* initSS() {
     NSMutableArray *SSs = [[NSMutableArray alloc] init];
-    for (int i = 0; i < CoordinateCount; i++) {
+    for (int i = 0; i < NumberOfSS; i++) {
         int theColumn = i/MapRows;
-        int x = 25 + (BeaconPreCount * (i - theColumn*MapRows));
-        int y = 25 + (BeaconPreCount * theColumn);
+        int x = 25 + (NumberOfBSPool * (i - theColumn*MapRows));
+        int y = 25 + (NumberOfBSPool * theColumn);
         SubStation *ss = [[SubStation alloc] initWithPosition:SPPositionMake(x, y) andNumber:i];
         [SSs addObject:ss];
     }
@@ -25,23 +25,33 @@ NSMutableArray* initSS() {
 NSMutableArray* initialBS() {
     NSMutableArray *SSs = initSS();
     
-    NSMutableArray *cpoints = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *beaconData = [SPPlistManager GetBeaconData];
-    for (NSDictionary *beacon in beaconData) {
-        BaseStation *newBeacon = [[BaseStation alloc] initWithPosition:SPPositionMake([[beacon objectForKey:@"x"] intValue], [[beacon objectForKey:@"y"] intValue])];
+    NSMutableArray *BSs = [[NSMutableArray alloc] init];
+    NSMutableArray *bsData = [SPPlistManager GetBeaconData];
+    for (NSDictionary *bs in bsData) {
+        BaseStation *newBS = [[BaseStation alloc] initWithPosition:SPPositionMake([[bs objectForKey:@"x"] intValue], [[bs objectForKey:@"y"] intValue])];
         for (SubStation *ss in SSs) {
-            [newBeacon addSubStaions:ss];
+            [newBS addSubStaions:ss];
         }
-        Cpoint *cpoint = [[Cpoint alloc] initWithBS:newBeacon];
+        [BSs addObject:newBS];
+    }
+    return BSs;
+}
+
+NSMutableArray* createCPoint(NSMutableArray *BSs, NSMutableArray *statusArray) {
+    NSMutableArray *cpoints = [[NSMutableArray alloc] init];
+    for (int i = 0; i < BSs.count; i++) {
+        Cpoint *cpoint = [[Cpoint alloc] initWithBS:[BSs objectAtIndex:0]];
         [cpoints addObject:cpoint];
+    }
+    for (NSNumber *index in statusArray) {
+        ((Cpoint *)[cpoints objectAtIndex:[index intValue]]).status = YES;
     }
     return cpoints;
 }
 
-void initChromosome() {
-    NSMutableArray *cpoints = initialBS();
-    Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints];
+Chromosome* createChromosome(NSMutableArray *cpoints, int numberOfActivated) {
+    Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints andNumberOfActivated:numberOfActivated];
+    return chromosome;
 }
 
 
@@ -49,7 +59,9 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
-        initChromosome();
+        NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
+        NSMutableArray *cpoints = createCPoint(initialBS(), statusArray);
+        createChromosome(cpoints, NumberOfOActivatedBS);
     }
     return 0;
 }
