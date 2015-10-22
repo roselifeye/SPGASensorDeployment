@@ -11,6 +11,6 @@
 
 @interface UtilityFunc : NSObject
 
-+ (float)fitnessFunctionWithChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio;
++ (float)fitnessFunctionWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio;
 
 @end

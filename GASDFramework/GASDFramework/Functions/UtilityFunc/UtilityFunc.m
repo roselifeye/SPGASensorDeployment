@@ -10,36 +10,20 @@
 
 @implementation UtilityFunc
 
-+ (float)fitnessFunctionWithChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio {
++ (float)fitnessFunctionWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio {
     float fitness = .0f;
-    NSMutableArray *numArray = [UtilityFunc numberOfRecognitionSSAndActivatedBSWithChromosome:chromosome];
+    NSMutableArray *numArray = [UtilityFunc numberOfRecognitionSSAndActivatedBSWithSS:SSs andChromosome:chromosome];
     int numOfActivatedBS = [[numArray objectAtIndex:0] intValue];
-    int numberOfRecognitionSS = [[numArray objectAtIndex:1] intValue];
-    fitness = numOfActivatedBS + numberOfRecognitionSS * ratio;
+    int numOfAmbiguity = [[numArray objectAtIndex:1] intValue];
+    fitness = numOfActivatedBS + numOfAmbiguity * ratio;
     
     return fitness;
 }
 
-+ (NSMutableArray *)numberOfRecognitionSSAndActivatedBSWithChromosome:(Chromosome *)chromosome {
++ (NSMutableArray *)numberOfRecognitionSSAndActivatedBSWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome {
     
-    int numOfActivatedBS = 1;
+    int numOfActivatedBS = 0;
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
-    
-    
-    NSMutableDictionary *SSWeightDic = [[NSMutableDictionary alloc] init];
-    
-    for (int i = 0; i < chromosome.cpoints.count; i++) {
-        Cpoint *point = [chromosome.cpoints objectAtIndex:i];
-        if (point.status) {
-            //  This aims to calculate the activated BS at the first time.
-            numOfActivatedBS += 1;
-            for (BSCorresponding *correspondingSS in point.bs.subSSs) {
-                int preWeight = [[SSWeightDic objectForKey:[NSNumber numberWithInt:correspondingSS.correspondingSS.num]] intValue];
-                preWeight += correspondingSS.RSSIweight;
-                [SSWeightDic setObject:[NSNumber numberWithInt:preWeight] forKey:[NSNumber numberWithInt:correspondingSS.correspondingSS.num]];
-            } 
-        }
-    }
     
     //  The following comment function causes more complexity, thus, I comment it.
     /**
@@ -49,33 +33,48 @@
      *  The reason using NSMutableSet here is avoiding to add duplicated element into the array.
      *  We think that if the totalWeight is equal, thus, the two SSs cannnot be distinguish.
      */
-    /*
-    int numOfRecognition = 0;
-    NSMutableSet *SSWeightSet = [[NSMutableSet alloc] init];
-    for (int i = 0; i < NumberOfSS; i++) {
-        //  The totalWeight consists of RSSweight times the BS's number. Please check the following code.
-        int totalWeight = 0;
-        for (int j = 0; j < chromosome.cpoints.count; j++) {
-            Cpoint *point = [chromosome.cpoints objectAtIndex:j];
-            //  If Point Status is Yes, which means this point is activated, and will dominat in chromosome, the system will add its weight.
-            if (point.status) {
-                //  This aims to calculate the activated BS at the first time.
-                if (0 == i) numOfActivatedBS += 1;
-                for (BSCorresponding *correspondingSS in point.bs.subSSs) {
-                    if (correspondingSS.correspondingSS.num == i) {
-                        totalWeight += correspondingSS.RSSIweight;
-                    }
+    
+    int numOfAmbiguity = 0;
+    
+    //  Calculate the Activated BS.
+    NSMutableArray *activatedIndexes = [[NSMutableArray alloc] init];
+    for (int i = 0; i < chromosome.cpoints.count; i++) {
+        Cpoint *point = [chromosome.cpoints objectAtIndex:i];
+        //  If Point Status is Yes, which means this point is activated, and will dominat in chromosome, the system will add its weight.
+        if (point.status) {
+            numOfActivatedBS += 1;
+            [activatedIndexes addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    
+    int cishu =0;
+    for (int i = 0; i < NumberOfSS-1; i++) {
+        for (int j = i+1; j< NumberOfSS; j++) {
+            SubStation *ss1 = [SSs objectAtIndex:i];
+            SubStation *ss2 = [SSs objectAtIndex:j];
+            int difference = (int)[activatedIndexes count];
+            for (NSNumber *index in activatedIndexes) {
+                CorrespondingBS *cBS1 = [ss1.correspongBSs objectAtIndex:[index intValue]];
+                CorrespondingBS *cBS2 = [ss2.correspongBSs objectAtIndex:[index intValue]];
+                if (cBS1.RSSIweight == cBS2.RSSIweight) {
+                    difference -= 1;
                 }
             }
+            cishu += 1;
+            if (0 == difference) {
+                numOfAmbiguity += 1;
+            }
         }
-        //NSLog(@"TotalWeight:%d", totalWeight);
-        [SSWeightSet addObject:[NSNumber numberWithInt:totalWeight]];
     }
-    //  Here, we minus number of no added elements to remove the duplicated elements.
-    numOfRecognition = (int)(SSWeightSet.count - (NumberOfSS - SSWeightSet.count));
-    */
+    
+    //  Test
+    float df = (float)numOfAmbiguity/((NumberOfSS-1+1)*(NumberOfSS-1)/2);
+    if (df < 0.2) {
+        NSLog(@"Yes");
+    }
+    
     [numArray addObject:[NSNumber numberWithInt:numOfActivatedBS]];
-    [numArray addObject:[NSNumber numberWithInteger:[[SSWeightDic allKeys] count]]];
+    [numArray addObject:[NSNumber numberWithInt:numOfAmbiguity]];
     
     return numArray;
 }

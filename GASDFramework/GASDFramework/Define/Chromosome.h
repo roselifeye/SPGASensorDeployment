@@ -13,7 +13,7 @@
  */
 @interface Chromosome : NSObject
 
-@property (nonatomic, retain) NSArray *cpoints;
+@property (nonatomic, retain) NSMutableArray *cpoints;
 
 @property (nonatomic, assign) int numberOfActivated;
 

@@ -7,18 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C32BB0B61BD2AA2B00E069CF /* BaseStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0B51BD2AA2B00E069CF /* BaseStation.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0BC1BD2AA5800E069CF /* SubStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BB1BD2AA5800E069CF /* SubStation.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0BF1BD2AA8800E069CF /* Chromosome.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BE1BD2AA8800E069CF /* Chromosome.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0C31BD2AAB500E069CF /* RSSIWeighted.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0C21BD2AAB500E069CF /* RSSIWeighted.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0C71BD2AADB00E069CF /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0C61BD2AADB00E069CF /* UtilityFunc.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0CB1BD2AAF600E069CF /* Crossover.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0CA1BD2AAF600E069CF /* Crossover.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0CF1BD2AB1B00E069CF /* Repair.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0CE1BD2AB1B00E069CF /* Repair.m */; settings = {ASSET_TAGS = (); }; };
-		C32BB0D31BD2AB2E00E069CF /* Mutation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0D21BD2AB2E00E069CF /* Mutation.m */; settings = {ASSET_TAGS = (); }; };
+		C32BB0B61BD2AA2B00E069CF /* BaseStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0B51BD2AA2B00E069CF /* BaseStation.m */; };
+		C32BB0BC1BD2AA5800E069CF /* SubStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BB1BD2AA5800E069CF /* SubStation.m */; };
+		C32BB0BF1BD2AA8800E069CF /* Chromosome.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BE1BD2AA8800E069CF /* Chromosome.m */; };
+		C32BB0C31BD2AAB500E069CF /* RSSIWeighted.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0C21BD2AAB500E069CF /* RSSIWeighted.m */; };
+		C32BB0C71BD2AADB00E069CF /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0C61BD2AADB00E069CF /* UtilityFunc.m */; };
+		C32BB0CB1BD2AAF600E069CF /* Crossover.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0CA1BD2AAF600E069CF /* Crossover.m */; };
+		C32BB0D31BD2AB2E00E069CF /* Mutation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0D21BD2AB2E00E069CF /* Mutation.m */; };
 		C34535F51BD1A39700F4BBFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C34535F41BD1A39700F4BBFE /* main.m */; };
-		C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */; settings = {ASSET_TAGS = (); }; };
+		C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CDEC6B1BD40A2100708DDE /* SPPlistManager.m */; };
 		C3CDEC701BD40BE800708DDE /* SPBeaconLocationList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CDEC6E1BD40BAD00708DDE /* SPBeaconLocationList.plist */; };
-		C3CDECA71BD4120100708DDE /* SPBeaconLocationList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */; settings = {ASSET_TAGS = (); }; };
+		C3CDECA71BD4120100708DDE /* SPBeaconLocationList.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CDECA61BD4120100708DDE /* SPBeaconLocationList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,8 +45,6 @@
 		C32BB0C61BD2AADB00E069CF /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UtilityFunc.m; path = Functions/UtilityFunc/UtilityFunc.m; sourceTree = "<group>"; };
 		C32BB0C91BD2AAF600E069CF /* Crossover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crossover.h; path = Functions/Crossover/Crossover.h; sourceTree = "<group>"; };
 		C32BB0CA1BD2AAF600E069CF /* Crossover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Crossover.m; path = Functions/Crossover/Crossover.m; sourceTree = "<group>"; };
-		C32BB0CD1BD2AB1B00E069CF /* Repair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Repair.h; path = Functions/Repair/Repair.h; sourceTree = "<group>"; };
-		C32BB0CE1BD2AB1B00E069CF /* Repair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Repair.m; path = Functions/Repair/Repair.m; sourceTree = "<group>"; };
 		C32BB0D11BD2AB2E00E069CF /* Mutation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutation.h; path = Functions/Mutation/Mutation.h; sourceTree = "<group>"; };
 		C32BB0D21BD2AB2E00E069CF /* Mutation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mutation.m; path = Functions/Mutation/Mutation.m; sourceTree = "<group>"; };
 		C32BB0D41BD2AB4900E069CF /* GlobalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
@@ -72,15 +69,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8BA2751B1BD9217800493ED2 /* RSSIWeightFunction */ = {
+			isa = PBXGroup;
+			children = (
+				C32BB0C11BD2AAB500E069CF /* RSSIWeighted.h */,
+				C32BB0C21BD2AAB500E069CF /* RSSIWeighted.m */,
+			);
+			name = RSSIWeightFunction;
+			sourceTree = "<group>";
+		};
 		C32BB0C01BD2AA9900E069CF /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				8BA2751B1BD9217800493ED2 /* RSSIWeightFunction */,
 				C32BB0D01BD2AB1F00E069CF /* Mutation */,
-				C32BB0CC1BD2AB0300E069CF /* Repair */,
 				C32BB0C81BD2AAE300E069CF /* Crossover */,
 				C32BB0C41BD2AABF00E069CF /* UtilityFunc */,
-				C32BB0C11BD2AAB500E069CF /* RSSIWeighted.h */,
-				C32BB0C21BD2AAB500E069CF /* RSSIWeighted.m */,
 			);
 			name = Functions;
 			sourceTree = "<group>";
@@ -101,15 +105,6 @@
 				C32BB0CA1BD2AAF600E069CF /* Crossover.m */,
 			);
 			name = Crossover;
-			sourceTree = "<group>";
-		};
-		C32BB0CC1BD2AB0300E069CF /* Repair */ = {
-			isa = PBXGroup;
-			children = (
-				C32BB0CD1BD2AB1B00E069CF /* Repair.h */,
-				C32BB0CE1BD2AB1B00E069CF /* Repair.m */,
-			);
-			name = Repair;
 			sourceTree = "<group>";
 		};
 		C32BB0D01BD2AB1F00E069CF /* Mutation */ = {
@@ -250,7 +245,6 @@
 				C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */,
 				C32BB0C71BD2AADB00E069CF /* UtilityFunc.m in Sources */,
 				C32BB0CB1BD2AAF600E069CF /* Crossover.m in Sources */,
-				C32BB0CF1BD2AB1B00E069CF /* Repair.m in Sources */,
 				C32BB0B61BD2AA2B00E069CF /* BaseStation.m in Sources */,
 				C32BB0BC1BD2AA5800E069CF /* SubStation.m in Sources */,
 				C32BB0C31BD2AAB500E069CF /* RSSIWeighted.m in Sources */,

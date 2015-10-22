@@ -11,7 +11,7 @@
 
 @implementation Chromosome
 
-- (instancetype)initWithPosition:(NSArray *)cpoints andNumberOfActivated:(int)numberOfActivated {
+- (instancetype)initWithPosition:(NSMutableArray *)cpoints andNumberOfActivated:(int)numberOfActivated {
     if (self) {
         _cpoints = cpoints;
         _numberOfActivated = numberOfActivated;
