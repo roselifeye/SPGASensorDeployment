@@ -10,6 +10,11 @@
 
 @interface SPPlistManager : NSObject
 
+/**
+ *  Get Station Informations From Plist.
+ *
+ *  @return Array of the Informations.
+ */
 + (NSMutableArray *)GetBSData;
 
 @end

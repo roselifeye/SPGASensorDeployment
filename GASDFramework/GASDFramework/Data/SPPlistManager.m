@@ -11,7 +11,6 @@
 @implementation SPPlistManager
 
 
-//读取数据
 + (NSMutableArray *)GetBSData {
     NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SPBeaconLocationList.plist";
     //NSString *path =  [[NSBundle mainBundle] pathForResource:@"SPBeaconLocationList" ofType:@"plist"];
