@@ -76,9 +76,6 @@ int main(int argc, const char * argv[]) {
             Chromosome* chro2 = createChromosome(SSs, cpoints2, NumberOfOActivatedBS);
             [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
             NSLog(@"123");
-            //if (chro.fitness >= MinimumFitness) {
-                //NSLog(@"GOOD");
-                //break;}
         }
     }
     return 0;

@@ -47,21 +47,19 @@
         }
     }
     
-    int cishu =0;
     for (int i = 0; i < NumberOfSS-1; i++) {
         for (int j = i+1; j< NumberOfSS; j++) {
             SubStation *ss1 = [SSs objectAtIndex:i];
             SubStation *ss2 = [SSs objectAtIndex:j];
-            int difference = (int)[activatedIndexes count];
+            int similiarity = 0;
             for (NSNumber *index in activatedIndexes) {
                 CorrespondingBS *cBS1 = [ss1.correspongBSs objectAtIndex:[index intValue]];
                 CorrespondingBS *cBS2 = [ss2.correspongBSs objectAtIndex:[index intValue]];
                 if (cBS1.RSSIweight == cBS2.RSSIweight) {
-                    difference -= 1;
+                    similiarity += 1;
                 }
             }
-            cishu += 1;
-            if (0 == difference) {
+            if ([activatedIndexes count] == similiarity) {
                 numOfAmbiguity += 1;
             }
         }
