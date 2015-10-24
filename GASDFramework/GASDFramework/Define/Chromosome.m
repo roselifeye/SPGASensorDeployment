@@ -31,8 +31,13 @@
 + (NSMutableArray *)getSeriesRanNumWith:(int)number {
     NSMutableArray *seriesRN = [[NSMutableArray alloc] init];
     srand((unsigned)time(NULL));
-    for (int i = 0; i < number; i++) {
-        [seriesRN addObject:[NSNumber numberWithInt:[Chromosome getRandomNumber]]];
+    for (int i = 0; i < number;) {
+        seriesRN[i] = [NSNumber numberWithInt:[Chromosome getRandomNumber]];
+        int j;
+        for (j = 0; j < i; j++) {
+            if ([[seriesRN objectAtIndex:j] intValue] == [[seriesRN objectAtIndex:i] integerValue]) break;
+        }
+        if (j == i) i++;
     }
     return seriesRN;
 }
