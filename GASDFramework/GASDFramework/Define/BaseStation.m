@@ -17,5 +17,20 @@
     return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    //encode properties/values
+    NSData *absCD = [NSData dataWithBytes:&_bsCD length:sizeof(_bsCD)];
+    [aCoder encodeObject:absCD forKey:@"bsCD"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if((self = [super init])) {
+        //decode properties/values
+        NSData *absCD = [aDecoder decodeObjectForKey:@"bsCD"];
+        [absCD getBytes:&_bsCD length:sizeof(_bsCD)];
+    }
+    return self;
+}
+
 @end
 

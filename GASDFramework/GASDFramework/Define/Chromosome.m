@@ -19,6 +19,23 @@
     return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    //encode properties/values
+    [aCoder encodeInt:self.numberOfActivated forKey:@"numberOfActivated"];
+    [aCoder encodeFloat:self.fitness forKey:@"fitness"];
+    [aCoder encodeObject:self.cpoints forKey:@"cpoints"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if((self = [super init])) {
+        //decode properties/values
+        self.cpoints = [aDecoder decodeObjectForKey:@"cpoints"];
+        self.numberOfActivated = [aDecoder decodeIntForKey:@"numberOfActivated"];
+        self.fitness = [aDecoder decodeFloatForKey:@"fitness"];
+    }
+    return self;
+}
+
 + (int)getRandomNumber {
     /**
      *  Seed the random-number generator with current time
@@ -51,6 +68,21 @@
     if(self) {
         _bs = baseStation;
         _status = NO;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    //encode properties/values
+    [aCoder encodeObject:self.bs forKey:@"bs"];
+    [aCoder encodeBool:self.status forKey:@"status"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if((self = [super init])) {
+        //decode properties/values
+        _bs = [aDecoder decodeObjectForKey:@"bs"];
+        self.status = [aDecoder decodeBoolForKey:@"status"];
     }
     return self;
 }

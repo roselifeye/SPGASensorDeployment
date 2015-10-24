@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chromosome.h"
 
 @interface SPPlistManager : NSObject
 
@@ -16,5 +17,9 @@
  *  @return Array of the Informations.
  */
 + (NSMutableArray *)GetBSData;
+
++ (void)StoreSurvivedOffspring:(Chromosome *)offspring;
+
++ (NSMutableArray *)GetSurvivedOffspringList
 
 @end
