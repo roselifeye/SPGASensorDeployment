@@ -20,6 +20,6 @@
 
 + (void)StoreSurvivedOffspring:(Chromosome *)offspring;
 
-+ (NSMutableArray *)GetSurvivedOffspringList
++ (NSMutableArray *)GetSurvivedOffspringList;
 
 @end

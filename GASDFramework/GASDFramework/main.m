@@ -11,6 +11,7 @@
 #import "Chromosome.h"
 #import "UtilityFunc.h"
 #import "Crossover.h"
+#import "Mutation.h"
 
 NSMutableArray *BSs;
 NSMutableArray *SSs;
@@ -59,6 +60,8 @@ Chromosome* createChromosome(NSMutableArray *cpoints, int numberOfActivated) {
 
 void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
     [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+    [Mutation mutateParentsWithOffspring:chro1];
+    [Mutation mutateParentsWithOffspring:chro2];
     chro1.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
     chro2.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
 }
@@ -83,8 +86,6 @@ int main(int argc, const char * argv[]) {
             NSMutableArray *cpoints2 = createCPoint(statusArray2);
             Chromosome *chro1 = createChromosome(cpoints1, NumberOfOActivatedBS);
             Chromosome *chro2 = createChromosome(cpoints2, NumberOfOActivatedBS);
-            
-            [SPPlistManager StoreSurvivedOffspring:chro1];
             
             evolutionFunc(chro1, chro2);
         }

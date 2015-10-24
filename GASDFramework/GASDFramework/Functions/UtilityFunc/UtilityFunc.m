@@ -17,6 +17,7 @@
     int numOfAmbiguity = [[numArray objectAtIndex:1] intValue];
     fitness = numOfActivatedBS + numOfAmbiguity * ratio;
     
+    chromosome.numberOfActivated = numOfActivatedBS;
     return fitness;
 }
 
