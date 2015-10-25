@@ -22,4 +22,6 @@
 
 + (NSMutableArray *)GetSurvivedOffspringList;
 
++ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring;
+
 @end

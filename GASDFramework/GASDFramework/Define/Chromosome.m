@@ -41,7 +41,7 @@
      *  Seed the random-number generator with current time
      *  so that the numbers will be different every time we run.
      */
-    int randNum = rand()%NumberOfBSPool + 1;;
+    int randNum = rand()%(NumberOfBSPool-1) + 1;;
     return randNum;
 }
 
@@ -52,7 +52,7 @@
         seriesRN[i] = [NSNumber numberWithInt:[Chromosome getRandomNumber]];
         int j;
         for (j = 0; j < i; j++) {
-            if ([[seriesRN objectAtIndex:j] intValue] == [[seriesRN objectAtIndex:i] integerValue]) break;
+            if ([[seriesRN objectAtIndex:j] intValue] == [[seriesRN objectAtIndex:i] intValue]) break;
         }
         if (j == i) i++;
     }

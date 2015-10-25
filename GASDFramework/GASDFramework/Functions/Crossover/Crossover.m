@@ -21,13 +21,15 @@
 }
 
 + (void)twoPointsCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2 {
-    int randomPoint1 = [Chromosome getRandomNumber];
-    sleep(1);
-    int randomPoint2 = [Chromosome getRandomNumber];
-    NSArray *exP1 = [p1.cpoints subarrayWithRange:NSMakeRange(randomPoint1, randomPoint2)];
-    NSArray *exP2 = [p2.cpoints subarrayWithRange:NSMakeRange(randomPoint1, randomPoint2)];
-    [p1.cpoints replaceObjectsInRange:NSMakeRange(randomPoint1, randomPoint2) withObjectsFromArray:exP2];
-    [p2.cpoints replaceObjectsInRange:NSMakeRange(randomPoint1, randomPoint2) withObjectsFromArray:exP1];
+    NSMutableArray *randomPoints = [Chromosome getSeriesRanNumWith:2];
+    int randomPoint1 = [[randomPoints objectAtIndex:0] intValue];
+    int randomPoint2 = [[randomPoints objectAtIndex:1] intValue];
+    int length = abs(randomPoint1-randomPoint2);
+    NSRange crossoverRange = NSMakeRange((randomPoint1<randomPoint2)?randomPoint1:randomPoint2, length);
+    NSArray *exP1 = [p1.cpoints subarrayWithRange:crossoverRange];
+    NSArray *exP2 = [p2.cpoints subarrayWithRange:crossoverRange];
+    [p1.cpoints replaceObjectsInRange:crossoverRange withObjectsFromArray:exP2];
+    [p2.cpoints replaceObjectsInRange:crossoverRange withObjectsFromArray:exP1];
 }
 
 @end

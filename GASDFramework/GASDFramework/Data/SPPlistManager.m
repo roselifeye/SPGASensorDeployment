@@ -42,7 +42,7 @@
 }
 
 + (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring {
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/NoneAmbiguityOffspring";
+    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/NoneAmbiguityOffspring.plist";
     NSMutableArray *offsprings = [[NSMutableArray alloc] initWithContentsOfFile:path];
     if (nil == offsprings) {
         offsprings = [[NSMutableArray alloc] init];

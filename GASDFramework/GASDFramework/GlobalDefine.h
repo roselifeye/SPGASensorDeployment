@@ -12,17 +12,28 @@
 /**
  *  Number of Original Activated BS
  */
-#define NumberOfOActivatedBS  10
+#define NumberOfOActivatedBS    15
 /**
  *  Number of Beacons
  */
-#define NumberOfBSPool      50
+#define NumberOfBSPool          50
 
-#define OriginalAlpha       0.6
+#define OriginalAlpha           0.6
+
+#define StartFitness            4000
+
 /**
- *  Add Minimum Fitness for filter the valid Chromosome
+ *  The Ratio of Ambiguity will reduce every
+ *  RatioReduceIteration iteration.
  */
-#define MinimumFitness         40
+#define RatioReduceIteration    3
+/**
+ *  The Ratio of ambiguity will reduce the value by times
+ *  RatioReduce
+ */
+#define RatioReduce             0.8
+
+#define NumberOfDesireBeacons   8
 
 
 /**

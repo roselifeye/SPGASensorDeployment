@@ -15,7 +15,7 @@
     NSMutableArray *numArray = [UtilityFunc numberOfRecognitionSSAndActivatedBSWithSS:SSs andChromosome:chromosome];
     int numOfActivatedBS = [[numArray objectAtIndex:0] intValue];
     int numOfAmbiguity = [[numArray objectAtIndex:1] intValue];
-    fitness = numOfActivatedBS + numOfAmbiguity * ratio;
+    fitness = numOfActivatedBS + numOfAmbiguity*ratio;
     
     chromosome.numberOfActivated = numOfActivatedBS;
     return fitness;
@@ -64,12 +64,6 @@
                 numOfAmbiguity += 1;
             }
         }
-    }
-    
-    //  Test
-    float df = (float)numOfAmbiguity/((NumberOfSS-1+1)*(NumberOfSS-1)/2);
-    if (df < 0.2) {
-        NSLog(@"Yes");
     }
     
     [numArray addObject:[NSNumber numberWithInt:numOfActivatedBS]];
