@@ -40,20 +40,19 @@
     return self;
 }
 
-+ (int)getRandomNumber {
++ (int)getRandomNumberWithRange:(int)range {
     /**
      *  Seed the random-number generator with current time
      *  so that the numbers will be different every time we run.
      */
-    int randNum = rand()%(NumberOfBSPool-1) + 1;;
+    int randNum = arc4random()%range;
     return randNum;
 }
 
-+ (NSMutableArray *)getSeriesRanNumWith:(int)number {
++ (NSMutableArray *)getSeriesRanNumWith:(int)number andRange:(int)range{
     NSMutableArray *seriesRN = [[NSMutableArray alloc] init];
-    srand((unsigned)time(NULL));
     for (int i = 0; i < number;) {
-        seriesRN[i] = [NSNumber numberWithInt:[Chromosome getRandomNumber]];
+        seriesRN[i] = [NSNumber numberWithInt:[Chromosome getRandomNumberWithRange:range]];
         int j;
         for (j = 0; j < i; j++) {
             if ([[seriesRN objectAtIndex:j] intValue] == [[seriesRN objectAtIndex:i] intValue]) break;

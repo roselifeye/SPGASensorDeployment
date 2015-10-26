@@ -11,7 +11,7 @@
 @implementation Crossover
 
 + (void)onePointCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2 {
-    int randomPoint = [Chromosome getRandomNumber];
+    int randomPoint = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
     NSArray *exP1 = [p1.cpoints subarrayWithRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
     NSArray *exP2 = [p2.cpoints subarrayWithRange:NSMakeRange(randomPoint, [p2.cpoints count]-randomPoint)];
     [p1.cpoints removeObjectsInRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
@@ -21,7 +21,7 @@
 }
 
 + (void)twoPointsCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2 {
-    NSMutableArray *randomPoints = [Chromosome getSeriesRanNumWith:2];
+    NSMutableArray *randomPoints = [Chromosome getSeriesRanNumWith:2 andRange:NumberOfPotentialBS];
     int randomPoint1 = [[randomPoints objectAtIndex:0] intValue];
     int randomPoint2 = [[randomPoints objectAtIndex:1] intValue];
     int length = abs(randomPoint1-randomPoint2);

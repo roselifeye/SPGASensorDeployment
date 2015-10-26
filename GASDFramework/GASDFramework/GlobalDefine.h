@@ -16,7 +16,9 @@
 /**
  *  Number of Beacons
  */
-#define NumberOfBSPool          50
+#define NumberOfPotentialBS          50
+
+#define NumberOfIndividualsInPool   100
 
 #define OriginalAlpha           0.6
 

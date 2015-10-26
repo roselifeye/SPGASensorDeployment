@@ -25,8 +25,8 @@
 
 - (instancetype)initWithPosition:(NSArray *)cpoints andNumberOfActivated:(int)numberOfActivated;
 
-+ (int)getRandomNumber;
-+ (NSMutableArray *)getSeriesRanNumWith:(int)number;
++ (int)getRandomNumberWithRange:(int)range;
++ (NSMutableArray *)getSeriesRanNumWith:(int)number andRange:(int)range;
 
 @end
 

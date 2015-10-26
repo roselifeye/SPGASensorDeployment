@@ -12,6 +12,7 @@
 #import "UtilityFunc.h"
 #import "Crossover.h"
 #import "Mutation.h"
+#import "IndividualsPool.h"
 
 NSMutableArray *BSs;
 NSMutableArray *SSs;
@@ -42,42 +43,17 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
     NSMutableArray *SSs = [[NSMutableArray alloc] init];
     for (int i = 0; i < NumberOfSS; i++) {
         int theColumn = i/MapRows;
-        int x = 25 + (NumberOfBSPool * (i - theColumn*MapRows));
-        int y = 25 + (NumberOfBSPool * theColumn);
+        int x = 25 + (NumberOfPotentialBS * (i - theColumn*MapRows));
+        int y = 25 + (NumberOfPotentialBS * theColumn);
         SubStation *ss = [[SubStation alloc] initWithPosition:SPPositionMake(x, y) andNumber:i andBS:BSs];
         [SSs addObject:ss];
     }
     return SSs;
 }
 
-NSMutableArray* createCPoint(NSMutableArray *statusArray) {
-    NSMutableArray *cpoints = [[NSMutableArray alloc] init];
-    for (int i = 0; i < BSs.count; i++) {
-        Cpoint *cpoint = [[Cpoint alloc] initWithBS:[BSs objectAtIndex:i]];
-        [cpoints addObject:cpoint];
-    }
-    for (NSNumber *index in statusArray) {
-        ((Cpoint *)[cpoints objectAtIndex:[index intValue]-1]).status = YES;
-    }
-    return cpoints;
-}
-
-Chromosome* createChromosome(NSMutableArray *cpoints, int numberOfActivated) {
-    Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints andNumberOfActivated:numberOfActivated];
-    chromosome.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chromosome andRecognitionRatio:ratioOfAmbiguity];
-    return chromosome;
-}
-
-Chromosome* createNewParentProcess() {
-    NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS];
-    NSMutableArray *cpoints = createCPoint(statusArray);
-    Chromosome *chro = createChromosome(cpoints, NumberOfOActivatedBS);
-    return chro;
-}
-
 void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
-//    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
-    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
+    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+//    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
     [Mutation mutateParentsWithOffspring:chro1];
     [Mutation mutateParentsWithOffspring:chro2];
     chro1.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
@@ -102,7 +78,7 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
         [[NSUserDefaults standardUserDefaults] setInteger:numberOfTotalIteration forKey:@"Iteration"];
         exit(0);
     }
-    evolutionFunc(survivedOffspring, createNewParentProcess());
+    //evolutionFunc(survivedOffspring, createNewParentProcess());
 }
 
 void initialValues() {
@@ -126,11 +102,11 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
-//        initialValues();
-//        Chromosome *chro1 = createNewParentProcess();
-//        sleep(1);
-//        Chromosome *chro2 = createNewParentProcess();
-//        evolutionFunc(chro1, chro2);
+        initialValues();
+        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
+        Chromosome *chro1 = [originalIndividuals objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool]];
+        Chromosome *chro2 = [originalIndividuals objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool]];
+        evolutionFunc(chro1, chro2);
         displayResult();
     }
     return 0;

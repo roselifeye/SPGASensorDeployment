@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8B5EBCDE1BDE69ED00F0B5EB /* Tournament.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EBCDD1BDE69ED00F0B5EB /* Tournament.m */; };
+		8B5EBCE11BDE6A4200F0B5EB /* IndividualsPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EBCE01BDE6A4200F0B5EB /* IndividualsPool.m */; };
 		C32BB0B61BD2AA2B00E069CF /* BaseStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0B51BD2AA2B00E069CF /* BaseStation.m */; };
 		C32BB0BC1BD2AA5800E069CF /* SubStation.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BB1BD2AA5800E069CF /* SubStation.m */; };
 		C32BB0BF1BD2AA8800E069CF /* Chromosome.m in Sources */ = {isa = PBXBuildFile; fileRef = C32BB0BE1BD2AA8800E069CF /* Chromosome.m */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		8B5EBCDC1BDE69ED00F0B5EB /* Tournament.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tournament.h; path = Functions/Tournament/Tournament.h; sourceTree = "<group>"; };
 		8B5EBCDD1BDE69ED00F0B5EB /* Tournament.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tournament.m; path = Functions/Tournament/Tournament.m; sourceTree = "<group>"; };
+		8B5EBCDF1BDE6A4200F0B5EB /* IndividualsPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndividualsPool.h; path = Define/IndividualsPool.h; sourceTree = "<group>"; };
+		8B5EBCE01BDE6A4200F0B5EB /* IndividualsPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndividualsPool.m; path = Define/IndividualsPool.m; sourceTree = "<group>"; };
 		C32BB0B41BD2AA2B00E069CF /* BaseStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseStation.h; path = Define/BaseStation.h; sourceTree = "<group>"; };
 		C32BB0B51BD2AA2B00E069CF /* BaseStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseStation.m; path = Define/BaseStation.m; sourceTree = "<group>"; };
 		C32BB0BA1BD2AA5800E069CF /* SubStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubStation.h; path = Define/SubStation.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				C32BB0BB1BD2AA5800E069CF /* SubStation.m */,
 				C32BB0BD1BD2AA8800E069CF /* Chromosome.h */,
 				C32BB0BE1BD2AA8800E069CF /* Chromosome.m */,
+				8B5EBCDF1BDE6A4200F0B5EB /* IndividualsPool.h */,
+				8B5EBCE01BDE6A4200F0B5EB /* IndividualsPool.m */,
 				C3D8D7081BD41F53003F8E52 /* SPCoordinate.h */,
 			);
 			name = Define;
@@ -255,6 +260,7 @@
 				8B5EBCDE1BDE69ED00F0B5EB /* Tournament.m in Sources */,
 				C34535F51BD1A39700F4BBFE /* main.m in Sources */,
 				C32BB0D31BD2AB2E00E069CF /* Mutation.m in Sources */,
+				8B5EBCE11BDE6A4200F0B5EB /* IndividualsPool.m in Sources */,
 				C32BB0BF1BD2AA8800E069CF /* Chromosome.m in Sources */,
 				C3CDEC6C1BD40A2100708DDE /* SPPlistManager.m in Sources */,
 				C32BB0C71BD2AADB00E069CF /* UtilityFunc.m in Sources */,

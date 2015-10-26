@@ -11,7 +11,7 @@
 @implementation Mutation
 
 + (void)mutateParentsWithOffspring:(Chromosome *)offspring {
-    int randNum = [Chromosome getRandomNumber];
+    int randNum = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
     BOOL reverseStatus = !((Cpoint *)[offspring.cpoints objectAtIndex:randNum]).status;
     ((Cpoint *)[offspring.cpoints objectAtIndex:randNum]).status = reverseStatus;
 }
