@@ -18,6 +18,8 @@
     fitness = numOfActivatedBS + numOfAmbiguity*ratio;
     
     chromosome.numberOfActivated = numOfActivatedBS;
+    chromosome.numberOfAmbiguity = numOfAmbiguity;
+    chromosome.ratio = ratio;
     return fitness;
 }
 

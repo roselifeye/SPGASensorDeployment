@@ -22,6 +22,8 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     //encode properties/values
     [aCoder encodeInt:self.numberOfActivated forKey:@"numberOfActivated"];
+    [aCoder encodeInt:self.numberOfAmbiguity forKey:@"numberOfAmbiguity"];
+    [aCoder encodeFloat:self.ratio forKey:@"ratio"];
     [aCoder encodeFloat:self.fitness forKey:@"fitness"];
     [aCoder encodeObject:self.cpoints forKey:@"cpoints"];
 }
@@ -31,6 +33,8 @@
         //decode properties/values
         self.cpoints = [aDecoder decodeObjectForKey:@"cpoints"];
         self.numberOfActivated = [aDecoder decodeIntForKey:@"numberOfActivated"];
+        self.numberOfAmbiguity = [aDecoder decodeIntForKey:@"numberOfAmbiguity"];
+        self.ratio = [aDecoder decodeFloatForKey:@"ratio"];
         self.fitness = [aDecoder decodeFloatForKey:@"fitness"];
     }
     return self;

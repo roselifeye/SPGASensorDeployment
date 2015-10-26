@@ -17,6 +17,10 @@
 
 @property (nonatomic, assign) int numberOfActivated;
 
+@property (nonatomic, assign) int numberOfAmbiguity;
+
+@property (nonatomic, assign) float ratio;
+
 @property (nonatomic, assign) float fitness;
 
 - (instancetype)initWithPosition:(NSArray *)cpoints andNumberOfActivated:(int)numberOfActivated;
