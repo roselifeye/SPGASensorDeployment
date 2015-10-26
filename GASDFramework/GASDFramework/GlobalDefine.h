@@ -35,7 +35,7 @@
  */
 #define RatioReduce             0.8
 
-#define NumberOfDesireBeacons   8
+#define NumberOfDesireBeacons   10
 
 
 /**

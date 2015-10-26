@@ -18,10 +18,10 @@
  */
 + (NSMutableArray *)GetBSData;
 
-+ (void)StoreSurvivedOffspring:(Chromosome *)offspring;
++ (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation;
 
-+ (NSMutableArray *)GetSurvivedOffspringList;
++ (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation;
 
-+ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring;
++ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation;
 
 @end

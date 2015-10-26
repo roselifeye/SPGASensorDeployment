@@ -19,37 +19,52 @@
     return beaconArray;
 }
 
-+ (void)StoreSurvivedOffspring:(Chromosome *)offspring {
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
-    NSMutableArray *offsprings = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    if (nil == offsprings) {
-        offsprings = [[NSMutableArray alloc] init];
++ (int)StoreChromosomeWithPath:(NSString *)path andOffspring:(Chromosome *)offspring withGeneration:(int)generation {
+    NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    NSMutableArray *offsprings = [NSMutableArray array];
+    if (nil == rootArray) {
+        rootArray = [[NSMutableArray alloc] init];
+        [rootArray addObject:offsprings];
     }
+    if (generation == rootArray.count) {
+        offsprings = [rootArray objectAtIndex:generation-1];
+    } else [rootArray addObject:offsprings];
+    
+    
     NSData *encodeOffspring = [NSKeyedArchiver archivedDataWithRootObject:offspring];
     [offsprings addObject:encodeOffspring];
-    [offsprings writeToFile:path atomically:YES];
+    
+    [rootArray writeToFile:path atomically:YES];
+    
+    return (int)[offsprings count];
 }
 
-+ (NSMutableArray *)GetSurvivedOffspringList {
++ (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation {
+    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
+    int numberOfCurrrentGeneration = [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
+    return numberOfCurrrentGeneration;
+}
+
++ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation{
+    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/NoneAmbiguityOffspring.plist";
+    [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
+}
+
++ (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation {
     NSMutableArray *survivedList = [NSMutableArray array];
     NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
-    NSMutableArray *offsprings = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    NSMutableArray *offsprings = [NSMutableArray array];
+    if (nil == rootArray) {
+        rootArray = [[NSMutableArray alloc] init];
+        [rootArray addObject:offsprings];
+    } else offsprings = [rootArray objectAtIndex:generation-1];
+    
     for (NSData *encodeOffspring in offsprings) {
         Chromosome *decodeOne = [NSKeyedUnarchiver unarchiveObjectWithData:encodeOffspring];
         [survivedList addObject:decodeOne];
     }
     return survivedList;
-}
-
-+ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring {
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/NoneAmbiguityOffspring.plist";
-    NSMutableArray *offsprings = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    if (nil == offsprings) {
-        offsprings = [[NSMutableArray alloc] init];
-    }
-    NSData *encodeOffspring = [NSKeyedArchiver archivedDataWithRootObject:offspring];
-    [offsprings addObject:encodeOffspring];
-    [offsprings writeToFile:path atomically:YES];
 }
 
 @end

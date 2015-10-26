@@ -17,6 +17,9 @@
 NSMutableArray *BSs;
 NSMutableArray *SSs;
 
+//  The number of the generation.
+int generation;
+
 //  This is the ratio of the ambiguity.
 float ratioOfAmbiguity;
 /**
@@ -28,6 +31,8 @@ float latestFitness;
 
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
+
+NSMutableArray *alreadySelectedIndexofIndividual;
 
 NSMutableArray* initialBS() {
     NSMutableArray *BSs = [[NSMutableArray alloc] init];
@@ -51,7 +56,27 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
     return SSs;
 }
 
-void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
+int getDifferentRandomNumberFromPool() {
+    int num = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool];
+    /*
+    if (alreadySelectedIndexofIndividual.count <= 99) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", [NSNumber numberWithInt:num]];
+        NSArray *array = [alreadySelectedIndexofIndividual filteredArrayUsingPredicate:predicate];
+        if (array.count > 0) {
+            num = getDifferentRandomNumberFromPool();
+        }
+    }*/
+    return num;
+}
+
+Chromosome* getNewChromosomeFromPool(NSMutableArray *pool) {
+    int randNum = getDifferentRandomNumberFromPool();
+    [alreadySelectedIndexofIndividual addObject:[NSNumber numberWithInt:randNum]];
+    Chromosome *chro = [pool objectAtIndex:randNum];
+    return chro;
+}
+
+void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
     [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
 //    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
     [Mutation mutateParentsWithOffspring:chro1];
@@ -59,15 +84,29 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
     chro1.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
     chro2.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
     
-    if (chro1.fitness == chro1.numberOfActivated) [SPPlistManager StoreNoneAmbiguityOffspring:chro1];
-    if (chro2.fitness == chro2.numberOfActivated) [SPPlistManager StoreNoneAmbiguityOffspring:chro2];
+    BOOL isAreadyAdded = NO;
+    int numberOfCurrrentGeneration = 0;
+    if (chro1.fitness == chro1.numberOfActivated) {
+        [SPPlistManager StoreNoneAmbiguityOffspring:chro1 withGeneration:generation];
+        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:chro1 withGeneration:generation];
+        isAreadyAdded = YES;
+    }
+    if (chro2.fitness == chro2.numberOfActivated) {
+        [SPPlistManager StoreNoneAmbiguityOffspring:chro2 withGeneration:generation];
+        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:chro2 withGeneration:generation];
+        isAreadyAdded = YES;
+    }
     
     Chromosome *survivedOffspring = (chro1.fitness<chro2.fitness)?chro1:chro2;
-    [SPPlistManager StoreSurvivedOffspring:survivedOffspring];
+    if (!isAreadyAdded) {
+        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:survivedOffspring withGeneration:generation];
+    }
+    
     
     numberOfTotalIteration++;
     if (survivedOffspring.fitness <= latestFitness) {
         numberOfCurrentIteration++;
+        latestFitness = survivedOffspring.fitness;
     } else numberOfCurrentIteration = 0;
     if (numberOfCurrentIteration >= RatioReduceIteration) {
         numberOfCurrentIteration = 0;
@@ -78,10 +117,23 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2) {
         [[NSUserDefaults standardUserDefaults] setInteger:numberOfTotalIteration forKey:@"Iteration"];
         exit(0);
     }
-    //evolutionFunc(survivedOffspring, createNewParentProcess());
+    
+    if (numberOfCurrrentGeneration == 100) {
+        NSLog(@"New Generation!");
+        NSMutableArray *newPool = [SPPlistManager GetSurvivedOffspringListWithGeneration:generation];
+        generation ++;
+        [alreadySelectedIndexofIndividual removeAllObjects];
+        evolutionFunc(getNewChromosomeFromPool(newPool), getNewChromosomeFromPool(newPool), newPool);
+    } else {
+        evolutionFunc(survivedOffspring, getNewChromosomeFromPool(pool), pool);
+    }
+    
+    
 }
 
 void initialValues() {
+    generation = 1;
+    
     ratioOfAmbiguity = OriginalAlpha;
     latestFitness = StartFitness;
     
@@ -90,10 +142,12 @@ void initialValues() {
     
     BSs = initialBS();
     SSs = initSS(BSs);
+    
+    alreadySelectedIndexofIndividual = [[NSMutableArray alloc] init];
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringList];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:14];
     int iteration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Iteration"] intValue];
     NSLog(@"Got it!");
 }
@@ -104,9 +158,10 @@ int main(int argc, const char * argv[]) {
         NSLog(@"Hello, World!");
         initialValues();
         NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-        Chromosome *chro1 = [originalIndividuals objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool]];
-        Chromosome *chro2 = [originalIndividuals objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool]];
-        evolutionFunc(chro1, chro2);
+        
+        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
+        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
+        evolutionFunc(chro1, chro2, originalIndividuals);
         displayResult();
     }
     return 0;
