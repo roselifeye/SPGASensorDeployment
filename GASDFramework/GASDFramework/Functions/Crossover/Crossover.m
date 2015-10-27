@@ -14,8 +14,13 @@
     int randomPoint = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
     NSArray *exP1 = [p1.cpoints subarrayWithRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
     NSArray *exP2 = [p2.cpoints subarrayWithRange:NSMakeRange(randomPoint, [p2.cpoints count]-randomPoint)];
-    [p1.cpoints removeObjectsInRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
-    [p2.cpoints removeObjectsInRange:NSMakeRange(randomPoint, [p2.cpoints count]-randomPoint)];
+
+//    [p1.cpoints removeObjectsInRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
+//    [p2.cpoints removeObjectsInRange:NSMakeRange(randomPoint, [p2.cpoints count]-randomPoint)];
+    [p1.cpoints removeObjectsInArray:exP1];
+    [p2.cpoints removeObjectsInArray:exP2];
+
+    
     [p1.cpoints addObjectsFromArray:exP2];
     [p2.cpoints addObjectsFromArray:exP1];
 }

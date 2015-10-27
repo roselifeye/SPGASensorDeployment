@@ -18,7 +18,7 @@
  */
 #define NumberOfPotentialBS          50
 
-#define NumberOfIndividualsInPool   100
+#define NumberOfIndividualsInPool   200
 
 #define OriginalAlpha           0.6
 

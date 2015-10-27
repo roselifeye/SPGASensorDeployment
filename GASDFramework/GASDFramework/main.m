@@ -32,8 +32,6 @@ float latestFitness;
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
 
-NSMutableArray *alreadySelectedIndexofIndividual;
-
 NSMutableArray* initialBS() {
     NSMutableArray *BSs = [[NSMutableArray alloc] init];
     NSMutableArray *bsData = [SPPlistManager GetBSData];
@@ -56,31 +54,18 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
     return SSs;
 }
 
-int getDifferentRandomNumberFromPool() {
-    int num = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool];
-    /*
-    if (alreadySelectedIndexofIndividual.count <= 99) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", [NSNumber numberWithInt:num]];
-        NSArray *array = [alreadySelectedIndexofIndividual filteredArrayUsingPredicate:predicate];
-        if (array.count > 0) {
-            num = getDifferentRandomNumberFromPool();
-        }
-    }*/
-    return num;
-}
-
 Chromosome* getNewChromosomeFromPool(NSMutableArray *pool) {
-    int randNum = getDifferentRandomNumberFromPool();
-    [alreadySelectedIndexofIndividual addObject:[NSNumber numberWithInt:randNum]];
-    Chromosome *chro = [pool objectAtIndex:randNum];
+    int randNum = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool];
+    Chromosome *chro = [[pool objectAtIndex:randNum] copy];
     return chro;
 }
 
 void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
-    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
-//    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
+//    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
     [Mutation mutateParentsWithOffspring:chro1];
     [Mutation mutateParentsWithOffspring:chro2];
+    
     chro1.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
     chro2.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
     
@@ -102,12 +87,12 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
         numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:survivedOffspring withGeneration:generation];
     }
     
-    
     numberOfTotalIteration++;
     if (survivedOffspring.fitness <= latestFitness) {
         numberOfCurrentIteration++;
         latestFitness = survivedOffspring.fitness;
     } else numberOfCurrentIteration = 0;
+    
     if (numberOfCurrentIteration >= RatioReduceIteration) {
         numberOfCurrentIteration = 0;
         ratioOfAmbiguity *= RatioReduce;
@@ -118,17 +103,14 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
         exit(0);
     }
     
-    if (numberOfCurrrentGeneration == 100) {
+    if (numberOfCurrrentGeneration == NumberOfIndividualsInPool) {
         NSLog(@"New Generation!");
-        NSMutableArray *newPool = [SPPlistManager GetSurvivedOffspringListWithGeneration:generation];
+        pool = [SPPlistManager GetSurvivedOffspringListWithGeneration:generation];
         generation ++;
-        [alreadySelectedIndexofIndividual removeAllObjects];
-        evolutionFunc(getNewChromosomeFromPool(newPool), getNewChromosomeFromPool(newPool), newPool);
+        evolutionFunc(getNewChromosomeFromPool(pool), getNewChromosomeFromPool(pool), pool);
     } else {
         evolutionFunc(survivedOffspring, getNewChromosomeFromPool(pool), pool);
     }
-    
-    
 }
 
 void initialValues() {
@@ -142,12 +124,10 @@ void initialValues() {
     
     BSs = initialBS();
     SSs = initSS(BSs);
-    
-    alreadySelectedIndexofIndividual = [[NSMutableArray alloc] init];
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:14];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:7];
     int iteration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Iteration"] intValue];
     NSLog(@"Got it!");
 }
@@ -156,12 +136,11 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
-        initialValues();
-        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-        
-        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
-        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
-        evolutionFunc(chro1, chro2, originalIndividuals);
+//        initialValues();
+//        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
+//        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
+//        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
+//        evolutionFunc(chro1, chro2, originalIndividuals);
         displayResult();
     }
     return 0;

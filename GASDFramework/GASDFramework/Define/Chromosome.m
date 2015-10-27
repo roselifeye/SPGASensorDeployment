@@ -40,6 +40,17 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    Chromosome *newChro = [[Chromosome allocWithZone:zone] init];
+    newChro.cpoints = self.cpoints;
+    newChro.numberOfActivated = self.numberOfActivated;
+    newChro.numberOfAmbiguity = self.numberOfAmbiguity;
+    newChro.ratio = self.ratio;
+    newChro.fitness = self.fitness;
+    
+    return newChro;
+}
+
 + (int)getRandomNumberWithRange:(int)range {
     /**
      *  Seed the random-number generator with current time
