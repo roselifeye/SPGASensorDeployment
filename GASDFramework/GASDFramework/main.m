@@ -127,7 +127,7 @@ void initialValues() {
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:7];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:11];
     int iteration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Iteration"] intValue];
     NSLog(@"Got it!");
 }
@@ -136,7 +136,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
-//        initialValues();
+        initialValues();
 //        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
 //        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
 //        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);

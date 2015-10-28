@@ -15,7 +15,9 @@
     NSMutableArray *numArray = [UtilityFunc numberOfRecognitionSSAndActivatedBSWithSS:SSs andChromosome:chromosome];
     int numOfActivatedBS = [[numArray objectAtIndex:0] intValue];
     int numOfAmbiguity = [[numArray objectAtIndex:1] intValue];
-    fitness = numOfActivatedBS + numOfAmbiguity*ratio;
+//    fitness = numOfActivatedBS + numOfAmbiguity*ratio;
+    
+    fitness = (1-ratio) * (float)numOfActivatedBS/NumberOfPotentialBS + ratio * (float)numOfAmbiguity/19900;
     
     chromosome.numberOfActivated = numOfActivatedBS;
     chromosome.numberOfAmbiguity = numOfAmbiguity;
