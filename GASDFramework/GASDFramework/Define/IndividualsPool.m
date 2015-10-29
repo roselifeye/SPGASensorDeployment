@@ -9,6 +9,7 @@
 #import "IndividualsPool.h"
 #import "Chromosome.h"
 #import "UtilityFunc.h"
+#import "SPPlistManager.h"
 
 @implementation IndividualsPool
 
@@ -16,7 +17,9 @@
     NSMutableArray *originalPool = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < NumberOfIndividualsInPool; i++) {
-        [originalPool addObject:[self CreateNewParentProcessWithBSs:BSs andSSs:SSs]];
+        Chromosome *chro = [self CreateNewParentProcessWithBSs:BSs andSSs:SSs];
+        [SPPlistManager StoreSurvivedOffspring:chro withGeneration:0];
+        [originalPool addObject:chro];
     }
     return originalPool;
 }
@@ -38,7 +41,7 @@
 
 + (Chromosome *)CreateChromosomeWithCpoints:(NSMutableArray *)cpoints andSSs:(NSMutableArray *)SSs andNumberOfActivated:(int)numberOfActivated {
     Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints andNumberOfActivated:numberOfActivated];
-    chromosome.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chromosome andRecognitionRatio:OriginalAlpha];
+    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chromosome andRecognitionRatio:OriginalAlpha];
     return chromosome;
 }
 

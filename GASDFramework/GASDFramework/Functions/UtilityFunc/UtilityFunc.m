@@ -10,7 +10,7 @@
 
 @implementation UtilityFunc
 
-+ (float)fitnessFunctionWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio {
++ (void)fitnessFunctionWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio {
     float fitness = .0f;
     NSMutableArray *numArray = [UtilityFunc numberOfRecognitionSSAndActivatedBSWithSS:SSs andChromosome:chromosome];
     int numOfActivatedBS = [[numArray objectAtIndex:0] intValue];
@@ -22,7 +22,7 @@
     chromosome.numberOfActivated = numOfActivatedBS;
     chromosome.numberOfAmbiguity = numOfAmbiguity;
     chromosome.ratio = ratio;
-    return fitness;
+    chromosome.fitness = fitness;
 }
 
 + (NSMutableArray *)numberOfRecognitionSSAndActivatedBSWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome {

@@ -32,6 +32,9 @@ float latestFitness;
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
 
+NSMutableArray *selectedIndexArray;
+NSMutableArray *offsprings;
+
 NSMutableArray* initialBS() {
     NSMutableArray *BSs = [[NSMutableArray alloc] init];
     NSMutableArray *bsData = [SPPlistManager GetBSData];
@@ -56,8 +59,53 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
 
 Chromosome* getNewChromosomeFromPool(NSMutableArray *pool) {
     int randNum = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool];
+    NSPredicate *dPredi = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@", [NSNumber numberWithInt:randNum]];
+    NSArray *dArray = [selectedIndexArray filteredArrayUsingPredicate:dPredi];
+    if (dArray.count == 0) {
+        
+    }
     Chromosome *chro = [[pool objectAtIndex:randNum] copy];
     return chro;
+}
+
+void eliteRecognize(Chromosome *chro) {
+    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
+    if (0 == chro.numberOfAmbiguity) {
+        [offsprings addObject:chro];
+    }
+}
+
+NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
+    NSMutableArray *firstOffsprings = [[NSMutableArray alloc] init];
+    //  Randomly obtain Index of NumberOfIndividualsInPool.
+    NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
+    for (int i; i<NumberOfIndividualsInPool;) {
+        Chromosome *chro1 = [[pool objectAtIndex:[[pairArray objectAtIndex:i] intValue]] copy];
+        Chromosome *chro2 = [[pool objectAtIndex:[[pairArray objectAtIndex:i+1] intValue]] copy];
+        /**
+         *  According to the Ratio of the Crossover,
+         *  calculate the Crossover for parents.
+         */
+        float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
+        if (ratioCros <= RatioOfCrossover) {
+            [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+            /**
+             *  According to the Ratio of the Crossover,
+             *  calculate the Crossover for parents.
+             */
+            float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
+            if (ratioMut <= RatioOfMutation) {
+                [Mutation mutateParentsWithOffspring:chro1];
+                [Mutation mutateParentsWithOffspring:chro2];
+            }
+            eliteRecognize(chro1);
+            eliteRecognize(chro2);
+            [firstOffsprings addObject:chro1];
+            [firstOffsprings addObject:chro2];
+        }
+        i += 2;
+    }
+    return firstOffsprings;
 }
 
 void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
@@ -66,8 +114,8 @@ void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
     [Mutation mutateParentsWithOffspring:chro1];
     [Mutation mutateParentsWithOffspring:chro2];
     
-    chro1.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
-    chro2.fitness = [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
+    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
+    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
     
     BOOL isAreadyAdded = NO;
     int numberOfCurrrentGeneration = 0;
@@ -122,6 +170,9 @@ void initialValues() {
     numberOfCurrentIteration = 0;
     numberOfTotalIteration = 0;
     
+    selectedIndexArray = [[NSMutableArray alloc] init];
+    offsprings = [[NSMutableArray alloc] init];
+    
     BSs = initialBS();
     SSs = initSS(BSs);
 }
@@ -137,11 +188,14 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         NSLog(@"Hello, World!");
         initialValues();
-        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
-        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
+        //  Obtain the Original Pool for individuals.
+        NSMutableArray *originalPool = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
+        [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(originalPool)];
         
-        evolutionFunc(chro1, chro2, originalIndividuals);
+        Chromosome *chro1 = getNewChromosomeFromPool(originalPool);
+        Chromosome *chro2 = getNewChromosomeFromPool(originalPool);
+        
+        evolutionFunc(chro1, chro2, originalPool);
         displayResult();
     }
     return 0;
