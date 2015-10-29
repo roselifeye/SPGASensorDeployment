@@ -36,7 +36,11 @@
     
     [rootArray writeToFile:path atomically:YES];
     
-    return (int)[offsprings count];
+    int num = (int)[offsprings count];
+    
+    rootArray = nil;
+    offsprings = nil;
+    return num;
 }
 
 + (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation {

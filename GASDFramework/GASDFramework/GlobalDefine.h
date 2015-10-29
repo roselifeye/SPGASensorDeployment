@@ -30,7 +30,7 @@
  *  The Ratio of Ambiguity will reduce every
  *  RatioReduceIteration iteration.
  */
-#define RatioReduceIteration        3
+#define RatioReduceIteration        2
 /**
  *  The Ratio of ambiguity will reduce the value by times
  *  RatioReduce

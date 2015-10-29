@@ -10,4 +10,14 @@
 
 @implementation Tournament
 
++ (Chromosome *)FourMemberTournament:(NSMutableArray *)pool {
+    Chromosome *chro;
+    for (int i = 0; i < 4; i++) {
+        Chromosome *chro1 = [pool objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2]];
+        Chromosome *chro2 = [pool objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2]];
+        chro = (chro1.fitness>chro2.fitness)?chro1:chro2;
+    }
+    return chro;
+}
+
 @end

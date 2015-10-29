@@ -13,6 +13,7 @@
 #import "Crossover.h"
 #import "Mutation.h"
 #import "IndividualsPool.h"
+#import "Tournament.h"
 
 NSMutableArray *BSs;
 NSMutableArray *SSs;
@@ -28,12 +29,14 @@ float ratioOfAmbiguity;
  *  it will be updated.
  */
 float latestFitness;
+float currentFitness;
 
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
 
-NSMutableArray *selectedIndexArray;
 NSMutableArray *offsprings;
+
+Chromosome *bestChromosome;
 
 NSMutableArray* initialBS() {
     NSMutableArray *BSs = [[NSMutableArray alloc] init];
@@ -57,21 +60,24 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
     return SSs;
 }
 
-Chromosome* getNewChromosomeFromPool(NSMutableArray *pool) {
-    int randNum = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool];
-    NSPredicate *dPredi = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@", [NSNumber numberWithInt:randNum]];
-    NSArray *dArray = [selectedIndexArray filteredArrayUsingPredicate:dPredi];
-    if (dArray.count == 0) {
-        
+void getReslut(Chromosome *chro) {
+    if (chro.numberOfActivated <= NumberOfDesireBeacons && chro.numberOfAmbiguity == 0) {
+        bestChromosome = chro;
+        NSLog(@"Get the Result");
+        exit(0);
     }
-    Chromosome *chro = [[pool objectAtIndex:randNum] copy];
-    return chro;
 }
 
 void eliteRecognize(Chromosome *chro) {
     [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
+    if (chro.fitness < currentFitness) {
+        currentFitness = chro.fitness;
+    }
     if (0 == chro.numberOfAmbiguity) {
         [offsprings addObject:chro];
+        [SPPlistManager StoreSurvivedOffspring:chro withGeneration:generation];
+        [SPPlistManager StoreNoneAmbiguityOffspring:chro withGeneration:generation];
+        getReslut(chro);
     }
 }
 
@@ -79,7 +85,7 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
     NSMutableArray *firstOffsprings = [[NSMutableArray alloc] init];
     //  Randomly obtain Index of NumberOfIndividualsInPool.
     NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
-    for (int i; i<NumberOfIndividualsInPool;) {
+    for (int i = 0; i < NumberOfIndividualsInPool;) {
         Chromosome *chro1 = [[pool objectAtIndex:[[pairArray objectAtIndex:i] intValue]] copy];
         Chromosome *chro2 = [[pool objectAtIndex:[[pairArray objectAtIndex:i+1] intValue]] copy];
         /**
@@ -108,95 +114,56 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
     return firstOffsprings;
 }
 
-void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
-    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
-//    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
-    [Mutation mutateParentsWithOffspring:chro1];
-    [Mutation mutateParentsWithOffspring:chro2];
-    
-    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro1 andRecognitionRatio:ratioOfAmbiguity];
-    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro2 andRecognitionRatio:ratioOfAmbiguity];
-    
-    BOOL isAreadyAdded = NO;
-    int numberOfCurrrentGeneration = 0;
-    if (chro1.fitness == chro1.numberOfActivated) {
-        [SPPlistManager StoreNoneAmbiguityOffspring:chro1 withGeneration:generation];
-        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:chro1 withGeneration:generation];
-        isAreadyAdded = YES;
-    }
-    if (chro2.fitness == chro2.numberOfActivated) {
-        [SPPlistManager StoreNoneAmbiguityOffspring:chro2 withGeneration:generation];
-        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:chro2 withGeneration:generation];
-        isAreadyAdded = YES;
-    }
-    
-    Chromosome *survivedOffspring = (chro1.fitness<chro2.fitness)?chro1:chro2;
-    if (!isAreadyAdded) {
-        numberOfCurrrentGeneration = [SPPlistManager StoreSurvivedOffspring:survivedOffspring withGeneration:generation];
-    }
-    
-    numberOfTotalIteration++;
-    if (survivedOffspring.fitness <= latestFitness) {
-        numberOfCurrentIteration++;
-        latestFitness = survivedOffspring.fitness;
-    } else numberOfCurrentIteration = 0;
-    
-    if (numberOfCurrentIteration >= RatioReduceIteration) {
-        numberOfCurrentIteration = 0;
-        ratioOfAmbiguity *= RatioReduce;
-    }
-    
-    if (survivedOffspring.numberOfActivated <= NumberOfDesireBeacons && survivedOffspring.fitness == survivedOffspring.numberOfActivated) {
-        [[NSUserDefaults standardUserDefaults] setInteger:numberOfTotalIteration forKey:@"Iteration"];
-        exit(0);
-    }
-    
-    if (numberOfCurrrentGeneration == NumberOfIndividualsInPool) {
-        NSLog(@"New Generation!");
-        pool = [SPPlistManager GetSurvivedOffspringListWithGeneration:generation];
-        generation ++;
-        evolutionFunc(getNewChromosomeFromPool(pool), getNewChromosomeFromPool(pool), pool);
-    } else {
-        evolutionFunc(survivedOffspring, getNewChromosomeFromPool(pool), pool);
-    }
-}
-
 void initialValues() {
-    generation = 1;
+    generation = 2;
     
     ratioOfAmbiguity = OriginalAlpha;
     latestFitness = StartFitness;
+    currentFitness = StartFitness;
     
-    numberOfCurrentIteration = 0;
-    numberOfTotalIteration = 0;
+    numberOfCurrentIteration = 1;
+    numberOfTotalIteration = 1;
     
-    selectedIndexArray = [[NSMutableArray alloc] init];
-    offsprings = [[NSMutableArray alloc] init];
+    offsprings = [NSMutableArray array];
     
     BSs = initialBS();
     SSs = initSS(BSs);
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:11];
-    int iteration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Iteration"] intValue];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:6];
     NSLog(@"Got it!");
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
+        displayResult();
         NSLog(@"Hello, World!");
         initialValues();
         //  Obtain the Original Pool for individuals.
         NSMutableArray *originalPool = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-        [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(originalPool)];
         
-        Chromosome *chro1 = getNewChromosomeFromPool(originalPool);
-        Chromosome *chro2 = getNewChromosomeFromPool(originalPool);
-        
-        evolutionFunc(chro1, chro2, originalPool);
-        displayResult();
+        while (1) {
+            //  Double the size of Pool by Pairwised Crossover and Mutaion.
+            [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(originalPool)];
+            while (offsprings.count < NumberOfIndividualsInPool) {
+                Chromosome *chro = [[Tournament FourMemberTournament:originalPool] copy];
+                [offsprings addObject:chro];
+                [SPPlistManager StoreSurvivedOffspring:chro withGeneration:generation];
+                getReslut(chro);
+            }
+            originalPool = [NSMutableArray arrayWithArray:offsprings];
+            offsprings = [NSMutableArray array];;
+            generation ++;
+            if (RatioReduceIteration == numberOfCurrentIteration) {
+                ratioOfAmbiguity *= RatioReduce;
+            }
+            if (currentFitness < latestFitness) {
+                numberOfCurrentIteration++;
+            } else numberOfCurrentIteration = 0;
+            NSLog(@"New Generation.");
+        }
     }
     return 0;
 }

@@ -18,7 +18,7 @@
     
     for (int i = 0; i < NumberOfIndividualsInPool; i++) {
         Chromosome *chro = [self CreateNewParentProcessWithBSs:BSs andSSs:SSs];
-        [SPPlistManager StoreSurvivedOffspring:chro withGeneration:0];
+        [SPPlistManager StoreSurvivedOffspring:chro withGeneration:1];
         [originalPool addObject:chro];
     }
     return originalPool;

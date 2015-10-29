@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chromosome.h"
 
 @interface Tournament : NSObject
+
++ (Chromosome *)FourMemberTournament:(NSMutableArray *)pool;
 
 @end
