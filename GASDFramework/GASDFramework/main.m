@@ -31,6 +31,11 @@ float ratioOfAmbiguity;
 float latestFitness;
 float currentFitness;
 
+int bestNumber;
+int bestAmbiguity;
+float bestFitness;
+float avgFitness;
+
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
 
@@ -70,6 +75,16 @@ void getReslut(Chromosome *chro) {
 
 void eliteRecognize(Chromosome *chro) {
     [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
+    
+    avgFitness += chro.fitness;
+//    bestNumber = (bestNumber<chro.numberOfActivated)?bestNumber:chro.numberOfActivated;
+//    bestAmbiguity = (bestAmbiguity<chro.numberOfAmbiguity)?bestAmbiguity:chro.numberOfAmbiguity;
+//    bestFitness = (bestFitness<chro.fitness)?bestFitness:chro.fitness;
+    if (bestFitness >= chro.fitness) {
+        bestChromosome = chro;
+        bestFitness = chro.fitness;
+    }
+    
     if (chro.fitness < currentFitness) {
         currentFitness = chro.fitness;
     }
@@ -101,8 +116,10 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
              */
             float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
             if (ratioMut <= RatioOfMutation) {
-                [Mutation mutateParentsWithOffspring:chro1];
-                [Mutation mutateParentsWithOffspring:chro2];
+                for (int j = 1; j<NumberOfMutation; j++) {
+                    [Mutation mutateParentsWithOffspring:chro1];
+                    [Mutation mutateParentsWithOffspring:chro2];
+                }
             }
             eliteRecognize(chro1);
             eliteRecognize(chro2);
@@ -121,6 +138,11 @@ void initialValues() {
     latestFitness = StartFitness;
     currentFitness = StartFitness;
     
+    bestNumber = NumberOfPotentialBS;
+    bestAmbiguity = 5000;
+    bestFitness = StartFitness;
+    avgFitness = 0;
+    
     numberOfCurrentIteration = 1;
     numberOfTotalIteration = 1;
     
@@ -131,12 +153,13 @@ void initialValues() {
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:20];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:0];
     NSLog(@"Got it!");
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        srand(1);
         // insert code here...
 //        displayResult();
         NSLog(@"Hello, World!");
@@ -145,10 +168,22 @@ int main(int argc, const char * argv[]) {
         NSMutableArray *originalPool = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
         
         while (1) {
+            avgFitness = 0.0;
+            bestFitness = StartFitness;
+            bestNumber = NumberOfPotentialBS;
+            bestAmbiguity = 5000;
             //  Double the size of Pool by Pairwised Crossover and Mutaion.
             [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(originalPool)];
             while (offsprings.count < NumberOfIndividualsInPool) {
                 Chromosome *chro = [[Tournament FourMemberTournament:originalPool] copy];
+                avgFitness += chro.fitness;
+//                bestNumber = (bestNumber<chro.numberOfActivated)?bestNumber:chro.numberOfActivated;
+//                bestAmbiguity = (bestAmbiguity<chro.numberOfAmbiguity)?bestAmbiguity:chro.numberOfAmbiguity;
+//                bestFitness = (bestFitness<chro.fitness)?bestFitness:chro.fitness;
+                if (bestFitness >= chro.fitness) {
+                    bestChromosome = chro;
+                    bestFitness = chro.fitness;
+                }
                 [offsprings addObject:chro];
                 getReslut(chro);
             }
@@ -162,6 +197,7 @@ int main(int argc, const char * argv[]) {
                 latestFitness = currentFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
+            NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
             NSLog(@"Generation %d.", generation);
             generation ++;
         }

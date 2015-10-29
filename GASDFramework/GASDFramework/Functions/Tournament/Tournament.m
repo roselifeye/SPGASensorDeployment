@@ -17,7 +17,7 @@
         Chromosome *chro1 = [pool objectAtIndex:ranNum];
         chro = (chro.fitness<chro1.fitness)?chro:chro1;
     }
-    NSLog(@"Beacon:%d, Ambig:%d, fitness:%f", chro.numberOfActivated, chro.numberOfAmbiguity, chro.fitness);
+//    NSLog(@"Beacon:%d, Ambig:%d, fit:%f", chro.numberOfActivated, chro.numberOfAmbiguity, chro.fitness);
     return chro;
 }
 

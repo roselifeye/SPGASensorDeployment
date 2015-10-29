@@ -18,9 +18,11 @@
  */
 #define NumberOfPotentialBS         50
 
-#define NumberOfIndividualsInPool   100
+#define NumberOfIndividualsInPool   50
 
-#define NumberOfDesireBeacons       15
+#define NumberOfDesireBeacons       10
+
+#define NumberOfMutation            5
 
 #define OriginalAlpha               0.6
 
@@ -35,10 +37,10 @@
  *  The Ratio of ambiguity will reduce the value by times
  *  RatioReduce
  */
-#define RatioReduce                 0.8
+#define RatioReduce                 1.0
 
 #define RatioOfCrossover            1.0
-#define RatioOfMutation             0.5
+#define RatioOfMutation             1.0
 
 
 /**

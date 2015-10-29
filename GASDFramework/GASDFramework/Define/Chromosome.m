@@ -56,7 +56,7 @@
      *  Seed the random-number generator with current time
      *  so that the numbers will be different every time we run.
      */
-    int randNum = arc4random()%range;
+    int randNum = random()%range;
     return randNum;
 }
 
