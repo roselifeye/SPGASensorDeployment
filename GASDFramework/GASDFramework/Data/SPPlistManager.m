@@ -54,6 +54,25 @@
     [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
 }
 
++ (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation {
+    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
+    NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    NSMutableArray *offsprings = [NSMutableArray array];
+    if (nil == rootArray) {
+        rootArray = [[NSMutableArray alloc] init];
+        [rootArray addObject:offsprings];
+    }
+    if (generation == rootArray.count) {
+        offsprings = [rootArray objectAtIndex:generation-1];
+    } else [rootArray addObject:offsprings];
+    
+    for (Chromosome *chro in pool) {
+        NSData *encodeOffspring = [NSKeyedArchiver archivedDataWithRootObject:chro];
+        [offsprings addObject:encodeOffspring];
+    }
+    [rootArray writeToFile:path atomically:YES];
+}
+
 + (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation {
     NSMutableArray *survivedList = [NSMutableArray array];
     NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";

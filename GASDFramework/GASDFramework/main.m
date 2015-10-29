@@ -73,9 +73,8 @@ void eliteRecognize(Chromosome *chro) {
     if (chro.fitness < currentFitness) {
         currentFitness = chro.fitness;
     }
-    if (0 == chro.numberOfAmbiguity) {
+    if (0 == chro.numberOfAmbiguity|| NumberOfDesireBeacons >= chro.numberOfActivated) {
         [offsprings addObject:chro];
-        [SPPlistManager StoreSurvivedOffspring:chro withGeneration:generation];
         [SPPlistManager StoreNoneAmbiguityOffspring:chro withGeneration:generation];
         getReslut(chro);
     }
@@ -84,17 +83,18 @@ void eliteRecognize(Chromosome *chro) {
 NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
     NSMutableArray *firstOffsprings = [[NSMutableArray alloc] init];
     //  Randomly obtain Index of NumberOfIndividualsInPool.
-    NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
+//    NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
     for (int i = 0; i < NumberOfIndividualsInPool;) {
-        Chromosome *chro1 = [[pool objectAtIndex:[[pairArray objectAtIndex:i] intValue]] copy];
-        Chromosome *chro2 = [[pool objectAtIndex:[[pairArray objectAtIndex:i+1] intValue]] copy];
+        Chromosome *chro1 = [[pool objectAtIndex:i] copy];
+        Chromosome *chro2 = [[pool objectAtIndex:i+1] copy];
         /**
          *  According to the Ratio of the Crossover,
          *  calculate the Crossover for parents.
          */
         float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
         if (ratioCros <= RatioOfCrossover) {
-            [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+//            [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+            [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
             /**
              *  According to the Ratio of the Crossover,
              *  calculate the Crossover for parents.
@@ -131,14 +131,14 @@ void initialValues() {
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:6];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:20];
     NSLog(@"Got it!");
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        displayResult();
+//        displayResult();
         NSLog(@"Hello, World!");
         initialValues();
         //  Obtain the Original Pool for individuals.
@@ -150,19 +150,20 @@ int main(int argc, const char * argv[]) {
             while (offsprings.count < NumberOfIndividualsInPool) {
                 Chromosome *chro = [[Tournament FourMemberTournament:originalPool] copy];
                 [offsprings addObject:chro];
-                [SPPlistManager StoreSurvivedOffspring:chro withGeneration:generation];
                 getReslut(chro);
             }
+            [SPPlistManager StoreCurrentPool:offsprings withGenetation:generation];
             originalPool = [NSMutableArray arrayWithArray:offsprings];
             offsprings = [NSMutableArray array];;
-            generation ++;
             if (RatioReduceIteration == numberOfCurrentIteration) {
                 ratioOfAmbiguity *= RatioReduce;
             }
             if (currentFitness < latestFitness) {
+                latestFitness = currentFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
-            NSLog(@"New Generation.");
+            NSLog(@"Generation %d.", generation);
+            generation ++;
         }
     }
     return 0;

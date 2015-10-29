@@ -20,7 +20,7 @@
 
 #define NumberOfIndividualsInPool   100
 
-#define NumberOfDesireBeacons       10
+#define NumberOfDesireBeacons       15
 
 #define OriginalAlpha               0.6
 

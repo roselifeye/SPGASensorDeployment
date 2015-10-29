@@ -24,4 +24,6 @@
 
 + (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation;
 
++ (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation;
+
 @end

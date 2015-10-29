@@ -11,13 +11,15 @@
 @implementation Tournament
 
 + (Chromosome *)FourMemberTournament:(NSMutableArray *)pool {
-    Chromosome *chro;
-    for (int i = 0; i < 4; i++) {
-        Chromosome *chro1 = [pool objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2]];
-        Chromosome *chro2 = [pool objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2]];
-        chro = (chro1.fitness>chro2.fitness)?chro1:chro2;
+    Chromosome *chro = [pool objectAtIndex:[Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2]];
+    for (int i = 0; i < 3; i++) {
+        int ranNum = [Chromosome getRandomNumberWithRange:NumberOfIndividualsInPool*2];
+        Chromosome *chro1 = [pool objectAtIndex:ranNum];
+        chro = (chro.fitness<chro1.fitness)?chro:chro1;
     }
+    NSLog(@"Beacon:%d, Ambig:%d, fitness:%f", chro.numberOfActivated, chro.numberOfAmbiguity, chro.fitness);
     return chro;
 }
+
 
 @end
