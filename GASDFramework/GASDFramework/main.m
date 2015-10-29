@@ -61,8 +61,8 @@ Chromosome* getNewChromosomeFromPool(NSMutableArray *pool) {
 }
 
 void evolutionFunc(Chromosome *chro1, Chromosome *chro2, NSMutableArray *pool) {
-//    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
-    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
+    [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+//    [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
     [Mutation mutateParentsWithOffspring:chro1];
     [Mutation mutateParentsWithOffspring:chro2];
     
@@ -137,10 +137,11 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         NSLog(@"Hello, World!");
         initialValues();
-//        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-//        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
-//        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
-//        evolutionFunc(chro1, chro2, originalIndividuals);
+        NSMutableArray *originalIndividuals = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
+        Chromosome *chro1 = getNewChromosomeFromPool(originalIndividuals);
+        Chromosome *chro2 = getNewChromosomeFromPool(originalIndividuals);
+        
+        evolutionFunc(chro1, chro2, originalIndividuals);
         displayResult();
     }
     return 0;

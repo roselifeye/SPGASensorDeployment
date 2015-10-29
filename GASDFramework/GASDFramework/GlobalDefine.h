@@ -12,30 +12,33 @@
 /**
  *  Number of Original Activated BS
  */
-#define NumberOfOActivatedBS    15
+#define NumberOfOActivatedBS        15
 /**
  *  Number of Beacons
  */
-#define NumberOfPotentialBS          50
+#define NumberOfPotentialBS         50
 
 #define NumberOfIndividualsInPool   200
 
-#define OriginalAlpha           0.6
+#define NumberOfDesireBeacons       10
 
-#define StartFitness            4000
+#define OriginalAlpha               0.6
+
+#define StartFitness                1
 
 /**
  *  The Ratio of Ambiguity will reduce every
  *  RatioReduceIteration iteration.
  */
-#define RatioReduceIteration    3
+#define RatioReduceIteration        3
 /**
  *  The Ratio of ambiguity will reduce the value by times
  *  RatioReduce
  */
-#define RatioReduce             0.8
+#define RatioReduce                 0.8
 
-#define NumberOfDesireBeacons   10
+#define RatioOfCrossover            1.0
+#define RatioOfMutation             0.5
 
 
 /**

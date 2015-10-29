@@ -43,7 +43,7 @@
 }
 
 + (Chromosome *)CreateNewParentProcessWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
-    NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:NumberOfOActivatedBS andRange:NumberOfPotentialBS];
+    NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:[Chromosome getRandomNumberWithRange:NumberOfPotentialBS] andRange:NumberOfPotentialBS];
     NSMutableArray *cpoints = [self CreateCPointWithBSs:BSs andSSs:SSs andStatus:statusArray];
     Chromosome *chro = [self CreateChromosomeWithCpoints:cpoints andSSs:SSs andNumberOfActivated:NumberOfOActivatedBS];
     return chro;
