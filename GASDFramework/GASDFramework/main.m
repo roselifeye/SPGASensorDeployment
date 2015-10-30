@@ -177,7 +177,7 @@ int main(int argc, const char * argv[]) {
             [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(tempArray)];
             while (offsprings.count < NumberOfIndividualsInPool) {
 //                Chromosome *chro = [[Tournament FourMemberTournament:originalPool] mutableCopy];
-                Chromosome *temp = [Tournament FourMemberTournament:originalPool];
+                Chromosome *temp = [Tournament MemberTournament:originalPool];
                 Chromosome *chro = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:temp]];
                 avgFitness += chro.fitness;
                 if (bestFitness >= chro.fitness) {

@@ -24,6 +24,8 @@
 
 #define NumberOfMutation            5
 
+#define NumberOfTournament          5
+
 #define OriginalAlpha               0.6
 
 #define StartFitness                1
