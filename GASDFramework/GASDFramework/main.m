@@ -29,7 +29,6 @@ float ratioOfAmbiguity;
  *  it will be updated.
  */
 float latestFitness;
-float currentFitness;
 
 int bestNumber;
 int bestAmbiguity;
@@ -76,15 +75,13 @@ void getReslut(Chromosome *chro) {
 void eliteRecognize(Chromosome *chro) {
     [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
     avgFitness += chro.fitness;
+    //  If the best fitness is larger than the current individual, the bestChromosom will be updated by chro.
     if (bestFitness >= chro.fitness) {
 //        bestChromosome = [chro mutableCopy];
         bestChromosome = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
         bestFitness = chro.fitness;
     }
-    
-    if (chro.fitness < currentFitness) {
-        currentFitness = chro.fitness;
-    }
+    //  When Amiguity equals to zero, we think it's elite and advanced survived to the next generation.
     if (0 == chro.numberOfAmbiguity) {
 //        [offsprings addObject:[chro mutableCopy]];
         Chromosome *temp = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
@@ -97,8 +94,6 @@ void eliteRecognize(Chromosome *chro) {
 NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
     NSMutableArray *firstOffsprings = [[NSMutableArray alloc] init];
     @autoreleasepool {
-    //  Randomly obtain Index of NumberOfIndividualsInPool.
-//    NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
         for (int i = 0; i < NumberOfIndividualsInPool;) {
             Chromosome *chro1 = [pool objectAtIndex:i];
             Chromosome *chro2 = [pool objectAtIndex:i+1];
@@ -128,6 +123,7 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
             }
             i += 2;
         }
+        [offsprings addObject:[NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:bestChromosome]]];
     }
     return firstOffsprings;
 }
@@ -137,7 +133,6 @@ void initialValues() {
     
     ratioOfAmbiguity = OriginalAlpha;
     latestFitness = StartFitness;
-    currentFitness = StartFitness;
     
     bestNumber = NumberOfPotentialBS;
     bestAmbiguity = 5000;
@@ -195,8 +190,8 @@ int main(int argc, const char * argv[]) {
             if (RatioReduceIteration == numberOfCurrentIteration) {
                 ratioOfAmbiguity *= RatioReduce;
             }
-            if (currentFitness < latestFitness) {
-                latestFitness = currentFitness;
+            if (bestFitness < latestFitness) {
+                latestFitness = bestFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
             NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
