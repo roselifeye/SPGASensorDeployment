@@ -26,7 +26,7 @@
 
 #define NumberOfTournament          5
 
-#define OriginalAlpha               0.6
+#define OriginalAlpha               0.8
 
 #define StartFitness                1
 
