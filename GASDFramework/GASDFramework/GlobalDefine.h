@@ -18,7 +18,7 @@
  */
 #define NumberOfPotentialBS         50
 
-#define NumberOfIndividualsInPool   50
+#define NumberOfIndividualsInPool   200
 
 #define NumberOfDesireBeacons       10
 

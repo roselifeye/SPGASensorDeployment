@@ -10,9 +10,9 @@
 #import "RSSIWeighted.h"
 
 
-@interface BaseStation : NSObject
+@interface BaseStation : NSObject <NSMutableCopying>
 
-@property (nonatomic, assign,  readonly) SPPosition bsCD;
+@property (nonatomic, assign, readonly) SPPosition bsCD;
 
 - (instancetype)initWithPosition:(SPPosition)position;
 

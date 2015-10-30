@@ -67,7 +67,7 @@ NSMutableArray* initSS(NSMutableArray *BSs) {
 
 void getReslut(Chromosome *chro) {
     if (chro.numberOfActivated <= NumberOfDesireBeacons && chro.numberOfAmbiguity == 0) {
-        bestChromosome = chro;
+        bestChromosome = [chro mutableCopy];
         NSLog(@"Get the Result");
         exit(0);
     }
@@ -75,58 +75,59 @@ void getReslut(Chromosome *chro) {
 
 void eliteRecognize(Chromosome *chro) {
     [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
-    
     avgFitness += chro.fitness;
-//    bestNumber = (bestNumber<chro.numberOfActivated)?bestNumber:chro.numberOfActivated;
-//    bestAmbiguity = (bestAmbiguity<chro.numberOfAmbiguity)?bestAmbiguity:chro.numberOfAmbiguity;
-//    bestFitness = (bestFitness<chro.fitness)?bestFitness:chro.fitness;
     if (bestFitness >= chro.fitness) {
-        bestChromosome = chro;
+//        bestChromosome = [chro mutableCopy];
+        bestChromosome = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
         bestFitness = chro.fitness;
     }
     
     if (chro.fitness < currentFitness) {
         currentFitness = chro.fitness;
     }
-    if (0 == chro.numberOfAmbiguity|| NumberOfDesireBeacons >= chro.numberOfActivated) {
-        [offsprings addObject:chro];
-        [SPPlistManager StoreNoneAmbiguityOffspring:chro withGeneration:generation];
+    if (0 == chro.numberOfAmbiguity) {
+//        [offsprings addObject:[chro mutableCopy]];
+        Chromosome *temp = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
+        [offsprings addObject:temp];
+        [SPPlistManager StoreNoneAmbiguityOffspring:temp withGeneration:generation];
         getReslut(chro);
     }
 }
 
 NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
     NSMutableArray *firstOffsprings = [[NSMutableArray alloc] init];
+    @autoreleasepool {
     //  Randomly obtain Index of NumberOfIndividualsInPool.
 //    NSMutableArray *pairArray = [Chromosome getSeriesRanNumWith:NumberOfIndividualsInPool andRange:NumberOfIndividualsInPool];
-    for (int i = 0; i < NumberOfIndividualsInPool;) {
-        Chromosome *chro1 = [[pool objectAtIndex:i] copy];
-        Chromosome *chro2 = [[pool objectAtIndex:i+1] copy];
-        /**
-         *  According to the Ratio of the Crossover,
-         *  calculate the Crossover for parents.
-         */
-        float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
-        if (ratioCros <= RatioOfCrossover) {
-//            [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
-            [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
+        for (int i = 0; i < NumberOfIndividualsInPool;) {
+            Chromosome *chro1 = [pool objectAtIndex:i];
+            Chromosome *chro2 = [pool objectAtIndex:i+1];
             /**
              *  According to the Ratio of the Crossover,
              *  calculate the Crossover for parents.
              */
-            float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
-            if (ratioMut <= RatioOfMutation) {
-                for (int j = 1; j<NumberOfMutation; j++) {
-                    [Mutation mutateParentsWithOffspring:chro1];
-                    [Mutation mutateParentsWithOffspring:chro2];
+            float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
+            if (ratioCros <= RatioOfCrossover) {
+//                [Crossover onePointCrossoverWithParentOne:chro1 andParentTwo:chro2];
+                [Crossover twoPointsCrossoverWithParentOne:chro1 andParentTwo:chro2];
+                /**
+                 *  According to the Ratio of the Crossover,
+                 *  calculate the Crossover for parents.
+                 */
+                float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
+                if (ratioMut <= RatioOfMutation) {
+                    for (int j = 1; j < NumberOfMutation; j++) {
+                        [Mutation mutateParentsWithOffspring:chro1];
+                        [Mutation mutateParentsWithOffspring:chro2];
+                    }
                 }
+                eliteRecognize(chro1);
+                eliteRecognize(chro2);
+                [firstOffsprings addObject:chro1];
+                [firstOffsprings addObject:chro2];
             }
-            eliteRecognize(chro1);
-            eliteRecognize(chro2);
-            [firstOffsprings addObject:chro1];
-            [firstOffsprings addObject:chro2];
+            i += 2;
         }
-        i += 2;
     }
     return firstOffsprings;
 }
@@ -146,7 +147,7 @@ void initialValues() {
     numberOfCurrentIteration = 1;
     numberOfTotalIteration = 1;
     
-    offsprings = [NSMutableArray array];
+    offsprings = [[NSMutableArray alloc] init];
     
     BSs = initialBS();
     SSs = initSS(BSs);
@@ -170,26 +171,27 @@ int main(int argc, const char * argv[]) {
         while (1) {
             avgFitness = 0.0;
             bestFitness = StartFitness;
-            bestNumber = NumberOfPotentialBS;
-            bestAmbiguity = 5000;
+            bestChromosome = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:[originalPool objectAtIndex:0]]];
             //  Double the size of Pool by Pairwised Crossover and Mutaion.
-            [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(originalPool)];
+            NSMutableArray *tempArray = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:originalPool]];
+            [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(tempArray)];
             while (offsprings.count < NumberOfIndividualsInPool) {
-                Chromosome *chro = [[Tournament FourMemberTournament:originalPool] copy];
+//                Chromosome *chro = [[Tournament FourMemberTournament:originalPool] mutableCopy];
+                Chromosome *temp = [Tournament FourMemberTournament:originalPool];
+                Chromosome *chro = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:temp]];
                 avgFitness += chro.fitness;
-//                bestNumber = (bestNumber<chro.numberOfActivated)?bestNumber:chro.numberOfActivated;
-//                bestAmbiguity = (bestAmbiguity<chro.numberOfAmbiguity)?bestAmbiguity:chro.numberOfAmbiguity;
-//                bestFitness = (bestFitness<chro.fitness)?bestFitness:chro.fitness;
                 if (bestFitness >= chro.fitness) {
-                    bestChromosome = chro;
+                    bestChromosome = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
                     bestFitness = chro.fitness;
                 }
                 [offsprings addObject:chro];
                 getReslut(chro);
             }
             [SPPlistManager StoreCurrentPool:offsprings withGenetation:generation];
-            originalPool = [NSMutableArray arrayWithArray:offsprings];
-            offsprings = [NSMutableArray array];;
+            [originalPool removeAllObjects];
+            originalPool = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:offsprings]];
+            [offsprings removeAllObjects];
+            offsprings = [[NSMutableArray alloc] init];;
             if (RatioReduceIteration == numberOfCurrentIteration) {
                 ratioOfAmbiguity *= RatioReduce;
             }

@@ -40,14 +40,13 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
+- (id)mutableCopyWithZone:(NSZone *)zone {
     Chromosome *newChro = [[Chromosome allocWithZone:zone] init];
-    newChro.cpoints = self.cpoints;
-    newChro.numberOfActivated = self.numberOfActivated;
-    newChro.numberOfAmbiguity = self.numberOfAmbiguity;
-    newChro.ratio = self.ratio;
-    newChro.fitness = self.fitness;
-    
+    newChro->_cpoints = [_cpoints mutableCopyWithZone:zone];
+    newChro->_fitness = _fitness;
+    newChro->_numberOfActivated = _numberOfActivated;
+    newChro->_numberOfAmbiguity = _numberOfAmbiguity;
+    newChro->_ratio = _ratio;
     return newChro;
 }
 
@@ -60,7 +59,7 @@
     return randNum;
 }
 
-+ (NSMutableArray *)getSeriesRanNumWith:(int)number andRange:(int)range{
++ (NSMutableArray *)getSeriesRanNumWith:(int)number andRange:(int)range {
     NSMutableArray *seriesRN = [[NSMutableArray alloc] init];
     for (int i = 0; i < number;) {
         seriesRN[i] = [NSNumber numberWithInt:[Chromosome getRandomNumberWithRange:range]];
@@ -86,7 +85,7 @@
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     //encode properties/values
     [aCoder encodeObject:self.bs forKey:@"bs"];
     [aCoder encodeBool:self.status forKey:@"status"];
@@ -99,6 +98,13 @@
         self.status = [aDecoder decodeBoolForKey:@"status"];
     }
     return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    Cpoint *newCpoint = [[Cpoint allocWithZone:zone] init];
+    newCpoint->_bs = [_bs mutableCopyWithZone:zone];
+    newCpoint->_status = _status;
+    return newCpoint;
 }
 
 @end

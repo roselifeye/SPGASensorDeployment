@@ -32,5 +32,11 @@
     return self;
 }
 
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    BaseStation *bs = [BaseStation allocWithZone:zone];
+    bs->_bsCD = _bsCD;
+    return bs;
+}
+
 @end
 

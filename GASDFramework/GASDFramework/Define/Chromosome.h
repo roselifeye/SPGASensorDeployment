@@ -11,7 +11,7 @@
 /**
  *  Each chromosome point contains a basestation information and its status.
  */
-@interface Chromosome : NSObject
+@interface Chromosome : NSObject <NSMutableCopying>
 
 @property (nonatomic, retain) NSMutableArray *cpoints;
 
@@ -31,9 +31,9 @@
 @end
 
 
-@interface Cpoint : NSObject
+@interface Cpoint : NSObject <NSMutableCopying>
 
-@property (nonatomic, retain, readonly) BaseStation *bs;
+@property (nonatomic, retain) BaseStation *bs;
 /**
  *  This is the activated status of the base station.
  */
