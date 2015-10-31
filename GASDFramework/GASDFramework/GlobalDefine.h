@@ -18,7 +18,7 @@
  */
 #define NumberOfPotentialBS         50
 
-#define NumberOfIndividualsInPool   500
+#define NumberOfIndividualsInPool   200
 
 #define NumberOfDesireBeacons       10
 
@@ -26,7 +26,7 @@
 
 #define NumberOfTournament          5
 
-#define OriginalAlpha               0.8
+#define OriginalAlpha               0.99
 
 #define StartFitness                1
 

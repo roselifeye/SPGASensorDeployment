@@ -162,7 +162,17 @@ int main(int argc, const char * argv[]) {
         initialValues();
         //  Obtain the Original Pool for individuals.
         NSMutableArray *originalPool = [IndividualsPool InitialOriginalPoolWithBSs:BSs andSSs:SSs];
-        
+        bestChromosome = [originalPool objectAtIndex:0];
+        avgFitness = 0;
+        for (Chromosome *origChro in originalPool) {
+            avgFitness += origChro.fitness;
+            if (bestFitness >= origChro.fitness) {
+                bestChromosome = origChro;
+                bestFitness = origChro.fitness;
+            }
+        }
+        NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
+        NSLog(@"Generation 1.");
         while (1) {
             avgFitness = 0.0;
             bestFitness = StartFitness;
