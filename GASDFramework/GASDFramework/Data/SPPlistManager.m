@@ -12,7 +12,7 @@
 
 
 + (NSMutableArray *)GetBSData {
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SPBeaconLocationList.plist";
+    NSString *path = [NSString stringWithFormat:@"%@SPBeaconLocationList.plist", DataStoreAddress];
     //NSString *path =  [[NSBundle mainBundle] pathForResource:@"SPBeaconLocationList" ofType:@"plist"];
     NSMutableArray *beaconArray = [[[NSMutableArray alloc] initWithContentsOfFile:path] mutableCopy];
     
@@ -47,19 +47,19 @@
 }
 
 + (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation {
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
+    NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring99.plist", DataStoreAddress];
     int numberOfCurrrentGeneration = [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
     return numberOfCurrrentGeneration;
 }
 
 + (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation{
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/NoneAmbiguityOffspring.plist";
+    NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring99.plist", DataStoreAddress];
     [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
 }
 
 + (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation {
     @autoreleasepool{
-        NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
+        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring99.plist", DataStoreAddress];
         NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
         NSMutableArray *offsprings = [NSMutableArray array];
         if (nil == rootArray) {
@@ -80,7 +80,7 @@
 
 + (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation {
     NSMutableArray *survivedList = [NSMutableArray array];
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring.plist";
+    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring99.plist";
     NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
     NSMutableArray *offsprings = [NSMutableArray array];
     if (nil == rootArray) {

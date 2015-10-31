@@ -37,6 +37,7 @@ float avgFitness;
 
 int numberOfCurrentIteration;
 int numberOfTotalIteration;
+int numberOfStopG;
 
 NSMutableArray *offsprings;
 
@@ -77,13 +78,11 @@ void eliteRecognize(Chromosome *chro) {
     avgFitness += chro.fitness;
     //  If the best fitness is larger than the current individual, the bestChromosom will be updated by chro.
     if (bestFitness >= chro.fitness) {
-//        bestChromosome = [chro mutableCopy];
         bestChromosome = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
         bestFitness = chro.fitness;
     }
     //  When Amiguity equals to zero, we think it's elite and advanced survived to the next generation.
     if (0 == chro.numberOfAmbiguity) {
-//        [offsprings addObject:[chro mutableCopy]];
         Chromosome *temp = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:chro]];
         [offsprings addObject:temp];
         [SPPlistManager StoreNoneAmbiguityOffspring:temp withGeneration:generation];
@@ -141,6 +140,7 @@ void initialValues() {
     
     numberOfCurrentIteration = 1;
     numberOfTotalIteration = 1;
+    numberOfStopG = 0;
     
     offsprings = [[NSMutableArray alloc] init];
     
@@ -155,8 +155,7 @@ void displayResult() {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        srand(1);
-        // insert code here...
+//        srand((unsigned)time(NULL));
 //        displayResult();
         NSLog(@"Hello, World!");
         initialValues();
@@ -181,7 +180,6 @@ int main(int argc, const char * argv[]) {
             NSMutableArray *tempArray = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:originalPool]];
             [originalPool addObjectsFromArray:pairParentsAndEvoluateOffspring(tempArray)];
             while (offsprings.count < NumberOfIndividualsInPool) {
-//                Chromosome *chro = [[Tournament FourMemberTournament:originalPool] mutableCopy];
                 Chromosome *temp = [Tournament MemberTournament:originalPool];
                 Chromosome *chro = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:temp]];
                 avgFitness += chro.fitness;
@@ -204,8 +202,17 @@ int main(int argc, const char * argv[]) {
                 latestFitness = bestFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
+            
             NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
             NSLog(@"Generation %d.", generation);
+            
+            if (bestFitness == latestFitness) {
+                numberOfStopG ++;
+            } else numberOfStopG = 0;
+            if (200 == numberOfStopG) {
+                NSLog(@"Stop!");
+                exit(0);
+            }
             generation ++;
         }
     }

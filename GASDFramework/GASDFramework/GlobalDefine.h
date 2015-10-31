@@ -18,13 +18,15 @@
  */
 #define NumberOfPotentialBS         50
 
-#define NumberOfIndividualsInPool   200
+#define NumberOfIndividualsInPool   500
 
 #define NumberOfDesireBeacons       10
 
 #define NumberOfMutation            5
 
 #define NumberOfTournament          5
+
+#define NumberOfStopGeneration      200
 
 #define OriginalAlpha               0.99
 
@@ -44,6 +46,8 @@
 #define RatioOfCrossover            1.0
 #define RatioOfMutation             1.0
 
+
+#define DataStoreAddress            @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/"
 
 /**
  *  The unit of Map
