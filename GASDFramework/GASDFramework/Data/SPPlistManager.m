@@ -47,19 +47,19 @@
 }
 
 + (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation {
-    NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring99.plist", DataStoreAddress];
+    NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring95.plist", DataStoreAddress];
     int numberOfCurrrentGeneration = [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
     return numberOfCurrrentGeneration;
 }
 
 + (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation{
-    NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring99.plist", DataStoreAddress];
+    NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring95.plist", DataStoreAddress];
     [SPPlistManager StoreChromosomeWithPath:path andOffspring:offspring withGeneration:generation];
 }
 
 + (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation {
     @autoreleasepool{
-        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring99.plist", DataStoreAddress];
+        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring95.plist", DataStoreAddress];
         NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
         NSMutableArray *offsprings = [NSMutableArray array];
         if (nil == rootArray) {
@@ -80,7 +80,7 @@
 
 + (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation {
     NSMutableArray *survivedList = [NSMutableArray array];
-    NSString *path = @"/Projects/Sipan/SPGASensorDeployment/GASDFramework/GASDFramework/SurvivedOffspring99.plist";
+    NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring95.plist", DataStoreAddress];
     NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
     NSMutableArray *offsprings = [NSMutableArray array];
     if (nil == rootArray) {

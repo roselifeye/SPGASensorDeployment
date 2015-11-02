@@ -149,7 +149,7 @@ void initialValues() {
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:0];
+    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:2];
     NSLog(@"Got it!");
 }
 
@@ -198,21 +198,19 @@ int main(int argc, const char * argv[]) {
             if (RatioReduceIteration == numberOfCurrentIteration) {
                 ratioOfAmbiguity *= RatioReduce;
             }
+            if (bestFitness == latestFitness) {
+                numberOfStopG ++;
+            } else numberOfStopG = 0;
             if (bestFitness < latestFitness) {
                 latestFitness = bestFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
-            
-            NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
-            NSLog(@"Generation %d.", generation);
-            
-            if (bestFitness == latestFitness) {
-                numberOfStopG ++;
-            } else numberOfStopG = 0;
             if (200 == numberOfStopG) {
                 NSLog(@"Stop!");
                 exit(0);
             }
+            NSLog(@"BestN:%d, BestA:%d, BestF:%f, AvgF:%f", bestChromosome.numberOfActivated, bestChromosome.numberOfAmbiguity, bestChromosome.fitness, avgFitness/NumberOfIndividualsInPool);
+            NSLog(@"Generation %d.", generation);
             generation ++;
         }
     }
