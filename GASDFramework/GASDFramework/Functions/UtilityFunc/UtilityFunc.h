@@ -11,9 +11,6 @@
 
 @interface UtilityFunc : NSObject
 
-+ (void)fitnessFunctionWithSS:(NSMutableArray *)SSs andChromosome:(Chromosome *)chromosome andRecognitionRatio:(float)ratio;
-
-//  New Fitness Function with NSString
-+ (NSMutableArray *)fitnessFuncWithSS:(NSMutableArray *)SSs andChromosome:(NSString *)chromosome andRecognitionRatio:(float)ratio;
++ (NSString *)fitnessFuncWithSS:(NSMutableArray *)SSs andChromosome:(NSString *)chromosome andRecognitionRatio:(float)ratio;
 
 @end

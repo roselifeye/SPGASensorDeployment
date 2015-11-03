@@ -10,13 +10,6 @@
 
 @implementation Mutation
 
-+ (void)mutateParentsWithOffspring:(Chromosome *)offspring {
-    int randNum = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
-    BOOL reverseStatus = !((Cpoint *)[offspring.cpoints objectAtIndex:randNum]).status;
-    ((Cpoint *)[offspring.cpoints objectAtIndex:randNum]).status = reverseStatus;
-}
-
-//  New Function
 + (NSString *)mutateOffspring:(NSString *)offspring {
     NSString *status = [Chromosome readChromosomeStatus:offspring];
     int randNum = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];

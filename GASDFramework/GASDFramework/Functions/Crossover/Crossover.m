@@ -10,6 +10,8 @@
 
 @implementation Crossover
 
+/*
+ * The // comment code gets problems for adding to array in the end of the array.
 + (void)onePointCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2 {
     int randomPoint = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
     NSArray *exP1 = [p1.cpoints subarrayWithRange:NSMakeRange(randomPoint, [p1.cpoints count]-randomPoint)];
@@ -32,7 +34,7 @@
 //        NSLog(@"Finished %d", p1.cpoints.count);
 //    }
 }
-
+*/
 + (void)twoPointsCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2 {
     NSMutableArray *randomPoints = [Chromosome getSeriesRanNumWith:2 andRange:NumberOfPotentialBS];
     int randomPoint1 = [[randomPoints objectAtIndex:0] intValue];
@@ -60,5 +62,6 @@
     NSArray *parents = [NSArray arrayWithObjects:p1, p2, nil];
     return parents;
 }
+
 
 @end

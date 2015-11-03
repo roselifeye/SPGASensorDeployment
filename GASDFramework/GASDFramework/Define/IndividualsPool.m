@@ -13,46 +13,6 @@
 
 @implementation IndividualsPool
 
-#pragma
-+ (NSMutableArray *)InitialOriginalPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
-    NSMutableArray *originalPool = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < NumberOfIndividualsInPool; i++) {
-        Chromosome *chro = [self CreateNewParentProcessWithBSs:BSs andSSs:SSs];
-        [originalPool addObject:chro];
-    }
-    
-    [SPPlistManager StoreCurrentPool:originalPool withGenetation:1];
-    return originalPool;
-}
-
-#pragma mark -
-#pragma mark - The following three function aims to create new parent.
-+ (NSMutableArray *)CreateCPointWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs andStatus:(NSMutableArray *)statusArray {
-    NSMutableArray *cpoints = [[NSMutableArray alloc] init];
-    for (int i = 0; i < BSs.count; i++) {
-        Cpoint *cpoint = [[Cpoint alloc] initWithBS:[BSs objectAtIndex:i]];
-        [cpoints addObject:cpoint];
-    }
-    for (NSNumber *index in statusArray) {
-        ((Cpoint *)[cpoints objectAtIndex:[index intValue]]).status = YES;
-    }
-    return cpoints;
-}
-
-+ (Chromosome *)CreateChromosomeWithCpoints:(NSMutableArray *)cpoints andSSs:(NSMutableArray *)SSs andNumberOfActivated:(int)numberOfActivated {
-    Chromosome *chromosome = [[Chromosome alloc] initWithPosition:cpoints andNumberOfActivated:numberOfActivated];
-    [UtilityFunc fitnessFunctionWithSS:SSs andChromosome:chromosome andRecognitionRatio:OriginalAlpha];
-    return chromosome;
-}
-
-+ (Chromosome *)CreateNewParentProcessWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
-    NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:[Chromosome getRandomNumberWithRange:NumberOfPotentialBS] andRange:NumberOfPotentialBS];
-    NSMutableArray *cpoints = [self CreateCPointWithBSs:BSs andSSs:SSs andStatus:statusArray];
-    Chromosome *chro = [self CreateChromosomeWithCpoints:cpoints andSSs:SSs andNumberOfActivated:statusArray.count];
-    return chro;
-}
-
 #pragma mark -
 #pragma mark - This is new test function for initializing individuals via string instead of NSObject
 + (NSMutableArray *)InitialPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
@@ -80,13 +40,7 @@
         }
         chroStr = [chroStr stringByAppendingFormat:@"%d", status];
     }
-    NSMutableArray *fitArray = [UtilityFunc fitnessFuncWithSS:SSs andChromosome:chroStr andRecognitionRatio:OriginalAlpha];
-    chroStr = [chroStr stringByAppendingString:@","];
-    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:0]];
-    chroStr = [chroStr stringByAppendingString:@","];
-    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:1]];
-    chroStr = [chroStr stringByAppendingString:@","];
-    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:2]];
+    chroStr = [UtilityFunc fitnessFuncWithSS:SSs andChromosome:chroStr andRecognitionRatio:OriginalAlpha];
 
     return chroStr;
 }

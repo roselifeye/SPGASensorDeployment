@@ -11,9 +11,6 @@
 
 @interface Mutation : NSObject
 
-+ (void)mutateParentsWithOffspring:(Chromosome *)offspring;
-
-//  New Function.
 + (NSString *)mutateOffspring:(NSString *)offspring;
 
 @end

@@ -11,8 +11,6 @@
 
 @interface Tournament : NSObject
 
-+ (Chromosome *)MemberTournament:(NSMutableArray *)pool;
-
 + (NSString *)MembersTournament:(NSMutableArray *)pool;
 
 @end

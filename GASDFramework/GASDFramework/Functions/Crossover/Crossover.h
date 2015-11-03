@@ -11,6 +11,8 @@
 
 @interface Crossover : NSObject
 
+
+
 /**
  *  This is a one point crossover function.
  *  First, randomly get a point index, or position.
@@ -20,7 +22,7 @@
  *  @param p1 Parent One
  *  @param p2 Parent Two
  */
-+ (void)onePointCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2;
++ (NSArray *)onePointCrossWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2;
 
 /**
  *  This is a two points crossover function.
@@ -31,9 +33,6 @@
  *  @param p1 Parent One
  *  @param p2 Parent Two
  */
-+ (void)twoPointsCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2;
-
-// New Function
-+ (NSArray *)onePointCrossWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2;
++ (NSArray *)twoPointsCrossoverWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2;
 
 @end
