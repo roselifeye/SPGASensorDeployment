@@ -18,13 +18,7 @@
  */
 + (NSMutableArray *)GetBSData;
 
-+ (int)StoreSurvivedOffspring:(Chromosome *)offspring withGeneration:(int)generation;
-
 + (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation;
-
-+ (void)StoreNoneAmbiguityOffspring:(Chromosome *)offspring withGeneration:(int)generation;
-
-+ (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation;
 
 //  New Function
 + (void)StoreNewPool:(NSMutableArray *)pool;

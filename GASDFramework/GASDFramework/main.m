@@ -151,7 +151,6 @@ void initialValues() {
 }
 
 void displayResult() {
-    NSMutableArray *results = [SPPlistManager GetSurvivedOffspringListWithGeneration:2];
     NSLog(@"Got it!");
 }
 
