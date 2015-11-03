@@ -150,7 +150,9 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
              */
             float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
             if (ratioCros <= RatioOfCrossover) {
-                [Crossover onePointCrossWithParentOne:chro1 andParentTwo:chro2];
+                NSArray *parents = [Crossover onePointCrossWithParentOne:chro1 andParentTwo:chro2];
+                chro1 = [parents objectAtIndex:0];
+                chro2 = [parents objectAtIndex:1];
                 /**
                  *  According to the Ratio of the Crossover,
                  *  calculate the Crossover for parents.

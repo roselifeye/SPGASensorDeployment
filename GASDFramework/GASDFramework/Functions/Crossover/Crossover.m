@@ -47,7 +47,7 @@
 
 #pragma mark -
 #pragma mark - New Function
-+ (void)onePointCrossWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2 {
++ (NSArray *)onePointCrossWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2 {
     NSString *status1 = [Chromosome readChromosomeStatus:p1];
     NSString *status2 = [Chromosome readChromosomeStatus:p2];
     int randomPoint = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
@@ -56,7 +56,9 @@
     
     p1 = [p1 stringByReplacingCharactersInRange:NSMakeRange(randomPoint, status1.length-randomPoint) withString:exP2];
     p2 = [p2 stringByReplacingCharactersInRange:NSMakeRange(randomPoint, status2.length-randomPoint) withString:exP1];
-
+    
+    NSArray *parents = [NSArray arrayWithObjects:p1, p2, nil];
+    return parents;
 }
 
 @end
