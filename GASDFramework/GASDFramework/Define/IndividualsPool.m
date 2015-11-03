@@ -13,6 +13,7 @@
 
 @implementation IndividualsPool
 
+#pragma
 + (NSMutableArray *)InitialOriginalPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
     NSMutableArray *originalPool = [[NSMutableArray alloc] init];
     
@@ -24,7 +25,6 @@
     [SPPlistManager StoreCurrentPool:originalPool withGenetation:1];
     return originalPool;
 }
-
 
 #pragma mark -
 #pragma mark - The following three function aims to create new parent.
@@ -51,6 +51,44 @@
     NSMutableArray *cpoints = [self CreateCPointWithBSs:BSs andSSs:SSs andStatus:statusArray];
     Chromosome *chro = [self CreateChromosomeWithCpoints:cpoints andSSs:SSs andNumberOfActivated:statusArray.count];
     return chro;
+}
+
+#pragma mark -
+#pragma mark - This is new test function for initializing individuals via string instead of NSObject
++ (NSMutableArray *)InitialPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
+    NSMutableArray *originalPool = [[NSMutableArray alloc] init];
+    for (int i = 0; i < NumberOfIndividualsInPool; i++) {
+        NSString *chro = [self CreateNewParentWithBSs:BSs andSSs:SSs];
+        [originalPool addObject:chro];
+    }
+    [SPPlistManager StoreNewPool:originalPool];
+    return originalPool;
+}
+
++ (NSString *)CreateNewParentWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs {
+    NSMutableArray *statusArray = [Chromosome getSeriesRanNumWith:[Chromosome getRandomNumberWithRange:NumberOfPotentialBS] andRange:NumberOfPotentialBS];
+    int numberOfActivated = 0;
+    NSString *chroStr = @"";
+    for (int i = 0; i < BSs.count; i++) {
+        BOOL status = NO;
+        for (NSNumber *index in statusArray) {
+            if (i == [index intValue]) {
+                status = YES;
+                numberOfActivated += 1;
+                break;
+            }
+        }
+        chroStr = [chroStr stringByAppendingFormat:@"%d", status];
+    }
+    NSMutableArray *fitArray = [UtilityFunc fitnessFuncWithSS:SSs andChromosome:chroStr andRecognitionRatio:OriginalAlpha];
+    chroStr = [chroStr stringByAppendingString:@","];
+    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:0]];
+    chroStr = [chroStr stringByAppendingString:@","];
+    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:1]];
+    chroStr = [chroStr stringByAppendingString:@","];
+    chroStr = [chroStr stringByAppendingString:[fitArray objectAtIndex:2]];
+
+    return chroStr;
 }
 
 @end

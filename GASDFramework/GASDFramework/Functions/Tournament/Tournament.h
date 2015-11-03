@@ -13,4 +13,6 @@
 
 + (Chromosome *)MemberTournament:(NSMutableArray *)pool;
 
++ (NSString *)MembersTournament:(NSMutableArray *)pool;
+
 @end

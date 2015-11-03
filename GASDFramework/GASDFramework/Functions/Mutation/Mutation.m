@@ -16,5 +16,10 @@
     ((Cpoint *)[offspring.cpoints objectAtIndex:randNum]).status = reverseStatus;
 }
 
-
+//  New Function
++ (void)mutateOffspringStatus:(NSString *)offspring {
+    int randNum = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
+    BOOL reverseStatus = ![[offspring substringWithRange:NSMakeRange(randNum, 1)] boolValue];
+    [offspring stringByReplacingCharactersInRange:NSMakeRange(randNum, 1) withString:[NSString stringWithFormat:@"%d", reverseStatus]];
+}
 @end

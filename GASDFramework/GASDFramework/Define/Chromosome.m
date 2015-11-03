@@ -74,6 +74,27 @@
     return seriesRN;
 }
 
+
++ (NSString *)readChromosomeStatus:(NSString *)chromosome {
+    NSString *statusStr = [[chromosome componentsSeparatedByString:@","] objectAtIndex:0];
+    return statusStr;
+}
+
++ (int)readChromosomeActivated:(NSString *)chromosome {
+    int numberOfActivated = [[[chromosome componentsSeparatedByString:@","] objectAtIndex:1] intValue];
+    return numberOfActivated;
+}
+
++ (int)readChromosomeAmbiguity:(NSString *)chromosome {
+    int numberOfAmbiguity = [[[chromosome componentsSeparatedByString:@","] objectAtIndex:2] intValue];
+    return numberOfAmbiguity;
+}
+
++ (float)readChromosomeFitness:(NSString *)chromosome {
+    float fitness = [[[chromosome componentsSeparatedByString:@","] objectAtIndex:3] floatValue];
+    return fitness;
+}
+
 @end
 
 

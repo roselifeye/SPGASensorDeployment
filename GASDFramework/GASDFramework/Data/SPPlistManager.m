@@ -95,4 +95,35 @@
     return survivedList;
 }
 
+#pragma mark -
+#pragma mark - Store New Chromosome type
++ (void)StoreNewPool:(NSMutableArray *)pool {
+    @autoreleasepool{
+        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring.plist", DataStoreAddress];
+        NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+        if (nil == rootArray) {
+            rootArray = [[NSMutableArray alloc] init];
+        }
+        [rootArray addObject:pool];
+        [rootArray writeToFile:path atomically:YES];
+    }
+}
+
++ (void)StoreNAOffspring:(NSString *)offspring withGeneration:(int)generation {
+    @autoreleasepool{
+        NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring.plist", DataStoreAddress];
+        NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+        NSMutableArray *offsprings = [NSMutableArray array];
+        if (nil == rootDic) {
+            rootDic = [[NSMutableDictionary alloc] init];
+            [rootDic setObject:offsprings forKey:[NSString stringWithFormat:@"%d", generation]];
+        } else {
+            offsprings = [rootDic objectForKey:[NSString stringWithFormat:@"%d", generation]];
+        }
+        [offsprings addObject:offspring];
+        [rootDic writeToFile:path atomically:YES];
+    }
+}
+
+
 @end

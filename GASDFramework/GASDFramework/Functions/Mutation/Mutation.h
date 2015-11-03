@@ -13,4 +13,7 @@
 
 + (void)mutateParentsWithOffspring:(Chromosome *)offspring;
 
+//  New Function.
++ (void)mutateOffspringStatus:(NSString *)offspring;
+
 @end

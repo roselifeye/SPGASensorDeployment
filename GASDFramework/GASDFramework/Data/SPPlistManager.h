@@ -26,4 +26,9 @@
 
 + (void)StoreCurrentPool:(NSMutableArray *)pool withGenetation:(int)generation;
 
+//  New Function
++ (void)StoreNewPool:(NSMutableArray *)pool;
+
++ (void)StoreNAOffspring:(NSString *)offspring withGeneration:(int)generation;
+
 @end

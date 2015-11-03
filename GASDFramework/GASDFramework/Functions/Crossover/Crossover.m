@@ -45,4 +45,15 @@
     [p2.cpoints replaceObjectsInRange:crossoverRange withObjectsFromArray:exP1];
 }
 
+#pragma mark -
+#pragma mark - New Function
++ (void)onePointCrossWithParentOneStatus:(NSString *)p1 andParentTwoStatus:(NSString *)p2 {
+    int randomPoint = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
+    NSString *exP1 = [p1 substringFromIndex:randomPoint];
+    NSString *exP2 = [p2 substringFromIndex:randomPoint];
+    
+    [p1 stringByReplacingCharactersInRange:NSMakeRange(randomPoint, p1.length-randomPoint) withString:exP2];
+    [p2 stringByReplacingCharactersInRange:NSMakeRange(randomPoint, p2.length-randomPoint) withString:exP1];
+}
+
 @end

@@ -12,4 +12,6 @@
 
 + (NSMutableArray *)InitialOriginalPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs;
 
++ (NSMutableArray *)InitialPoolWithBSs:(NSMutableArray *)BSs andSSs:(NSMutableArray *)SSs;
+
 @end

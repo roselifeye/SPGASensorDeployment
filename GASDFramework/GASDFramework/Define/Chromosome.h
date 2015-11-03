@@ -28,6 +28,11 @@
 + (int)getRandomNumberWithRange:(int)range;
 + (NSMutableArray *)getSeriesRanNumWith:(int)number andRange:(int)range;
 
++ (NSString *)readChromosomeStatus:(NSString *)chromosome;
++ (int)readChromosomeAmbiguity:(NSString *)chromosome;
++ (int)readChromosomeActivated:(NSString *)chromosome;
++ (float)readChromosomeFitness:(NSString *)chromosome;
+
 @end
 
 
