@@ -160,8 +160,8 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
                 float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
                 if (ratioMut <= RatioOfMutation) {
                     for (int j = 1; j < NumberOfMutation; j++) {
-                        chro1 = [Mutation mutateOffspring:[Chromosome readChromosomeStatus:chro1]];
-                        chro2 = [Mutation mutateOffspring:[Chromosome readChromosomeStatus:chro2]];
+                        chro1 = [Mutation mutateOffspring:chro1];
+                        chro2 = [Mutation mutateOffspring:chro2];
                     }
                 }
                 eliteRecognize(chro1);
