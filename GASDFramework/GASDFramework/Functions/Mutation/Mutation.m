@@ -17,9 +17,11 @@
 }
 
 //  New Function
-+ (void)mutateOffspringStatus:(NSString *)offspring {
++ (NSString *)mutateOffspring:(NSString *)offspring {
+    NSString *status = [Chromosome readChromosomeStatus:offspring];
     int randNum = [Chromosome getRandomNumberWithRange:NumberOfPotentialBS];
-    BOOL reverseStatus = ![[offspring substringWithRange:NSMakeRange(randNum, 1)] boolValue];
-    [offspring stringByReplacingCharactersInRange:NSMakeRange(randNum, 1) withString:[NSString stringWithFormat:@"%d", reverseStatus]];
+    BOOL reverseStatus = ![[status substringWithRange:NSMakeRange(randNum, 1)] boolValue];
+    offspring = [offspring stringByReplacingCharactersInRange:NSMakeRange(randNum, 1) withString:[NSString stringWithFormat:@"%d", reverseStatus]];
+    return offspring;
 }
 @end

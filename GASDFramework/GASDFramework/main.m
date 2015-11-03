@@ -150,7 +150,7 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
              */
             float ratioCros = (float)[Chromosome getRandomNumberWithRange:10]/10;
             if (ratioCros <= RatioOfCrossover) {
-                [Crossover onePointCrossWithParentOneStatus:[Chromosome readChromosomeStatus:chro1] andParentTwoStatus:[Chromosome readChromosomeStatus:chro2]];
+                [Crossover onePointCrossWithParentOne:chro1 andParentTwo:chro2];
                 /**
                  *  According to the Ratio of the Crossover,
                  *  calculate the Crossover for parents.
@@ -158,8 +158,8 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
                 float ratioMut = (float)[Chromosome getRandomNumberWithRange:10]/10;
                 if (ratioMut <= RatioOfMutation) {
                     for (int j = 1; j < NumberOfMutation; j++) {
-                        [Mutation mutateOffspringStatus:[Chromosome readChromosomeStatus:chro1]];
-                        [Mutation mutateOffspringStatus:[Chromosome readChromosomeStatus:chro2]];
+                        chro1 = [Mutation mutateOffspring:[Chromosome readChromosomeStatus:chro1]];
+                        chro2 = [Mutation mutateOffspring:[Chromosome readChromosomeStatus:chro2]];
                     }
                 }
                 eliteRecognize(chro1);

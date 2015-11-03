@@ -34,6 +34,6 @@
 + (void)twoPointsCrossoverWithParentOne:(Chromosome *)p1 andParentTwo:(Chromosome *)p2;
 
 // New Function
-+ (void)onePointCrossWithParentOneStatus:(NSString *)p1 andParentTwoStatus:(NSString *)p2;
++ (void)onePointCrossWithParentOne:(NSString *)p1 andParentTwo:(NSString *)p2;
 
 @end
