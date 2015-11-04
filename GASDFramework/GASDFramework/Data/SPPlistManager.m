@@ -67,7 +67,7 @@
 #pragma mark - Store New Chromosome type
 + (void)StoreNewPool:(NSMutableArray *)pool {
     @autoreleasepool{
-        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring.plist", DataStoreAddress];
+        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring80.plist", DataStoreAddress];
         NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
         if (nil == rootArray) {
             rootArray = [[NSMutableArray alloc] init];
@@ -79,7 +79,7 @@
 
 + (void)StoreNAOffspring:(NSString *)offspring withGeneration:(int)generation {
     @autoreleasepool{
-        NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring.plist", DataStoreAddress];
+        NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring80.plist", DataStoreAddress];
         NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
         NSMutableArray *offsprings = [NSMutableArray array];
         if (nil == rootDic) {
