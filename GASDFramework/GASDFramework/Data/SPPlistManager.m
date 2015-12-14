@@ -48,7 +48,7 @@
 
 + (NSMutableArray *)GetSurvivedOffspringListWithGeneration:(int)generation {
     NSMutableArray *survivedList = [NSMutableArray array];
-    NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring95.plist", DataStoreAddress];
+    NSString *path = [NSString stringWithFormat:@"%@20151124/5/SurvivedOffspring90.plist", DataStoreAddress];
     NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
     NSMutableArray *offsprings = [NSMutableArray array];
     if (nil == rootArray) {
@@ -67,7 +67,7 @@
 #pragma mark - Store New Chromosome type
 + (void)StoreNewPool:(NSMutableArray *)pool {
     @autoreleasepool{
-        NSString *path = [NSString stringWithFormat:@"%@SurvivedOffspring80.plist", DataStoreAddress];
+        NSString *path = [NSString stringWithFormat:@"%@20151124/5/SurvivedOffspring%f.plist", DataStoreAddress, OriginalAlpha];
         NSMutableArray *rootArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
         if (nil == rootArray) {
             rootArray = [[NSMutableArray alloc] init];
@@ -79,7 +79,7 @@
 
 + (void)StoreNAOffspring:(NSString *)offspring withGeneration:(int)generation {
     @autoreleasepool{
-        NSString *path = [NSString stringWithFormat:@"%@NoneAmbiguityOffspring80.plist", DataStoreAddress];
+        NSString *path = [NSString stringWithFormat:@"%@20151124/5/NoneAmbiguityOffspring%f.plist", DataStoreAddress, OriginalAlpha];
         NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
         NSMutableArray *offsprings = [NSMutableArray array];
         if (nil == rootDic) {

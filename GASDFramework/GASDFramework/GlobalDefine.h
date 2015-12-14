@@ -28,7 +28,7 @@
 
 #define NumberOfStopGeneration      200
 
-#define OriginalAlpha               0.8
+#define OriginalAlpha               0.80
 
 #define StartFitness                1
 

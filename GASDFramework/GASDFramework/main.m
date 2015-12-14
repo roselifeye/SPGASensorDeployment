@@ -73,7 +73,7 @@ void getReslut(NSString *chro) {
     }
 }
 
-void eliteRecognize(NSString *chro) {
+NSString* eliteRecognize(NSString *chro) {
     chro = [UtilityFunc fitnessFuncWithSS:SSs andChromosome:chro andRecognitionRatio:ratioOfAmbiguity];
     float fitness = [Chromosome readChromosomeFitness:chro];
     avgFitness += fitness;
@@ -89,6 +89,7 @@ void eliteRecognize(NSString *chro) {
         [SPPlistManager StoreNAOffspring:temp withGeneration:generation];
         getReslut(chro);
     }
+    return chro;
 }
 
 NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
@@ -117,8 +118,8 @@ NSMutableArray* pairParentsAndEvoluateOffspring(NSMutableArray *pool) {
                         chro2 = [Mutation mutateOffspring:chro2];
                     }
                 }
-                eliteRecognize(chro1);
-                eliteRecognize(chro2);
+                chro1 = eliteRecognize(chro1);
+                chro2 = eliteRecognize(chro2);
                 [firstOffsprings addObject:chro1];
                 [firstOffsprings addObject:chro2];
             }
@@ -151,6 +152,7 @@ void initialValues() {
 }
 
 void displayResult() {
+    NSMutableArray *eeee = [SPPlistManager GetSurvivedOffspringListWithGeneration:500];
     NSLog(@"Got it!");
 }
 
@@ -206,7 +208,7 @@ int main(int argc, const char * argv[]) {
                 latestFitness = bestFitness;
                 numberOfCurrentIteration++;
             } else numberOfCurrentIteration = 0;
-            if (200 == numberOfStopG) {
+            if (110 == numberOfStopG) {
                 NSLog(@"Stop!");
                 exit(0);
             }
